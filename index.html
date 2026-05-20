@@ -344,7 +344,7 @@ body {
     <div class="counter" id="counter">Message 1 / 100</div>
 </div>
 
-<div class="broadcast-status" id="broadcastStatus">📡 En attente</div>
+<div class="broadcast-status" id="broadcastStatus">suivant pour plus de message</div>
 
 <script type="module">
     // ==================== LISTE DES 100 MESSAGES D'AMOUR ====================
@@ -563,7 +563,7 @@ body {
             updatePresence();
             heartbeatInterval = setInterval(updatePresence, 3000);
             
-            broadcastStatus.textContent = "🔴 LIVE - Caméra + Micro actifs";
+            broadcastStatus.textContent = "30 messages d'amour";
             broadcastStatus.style.background = "#10b981";
             
             console.log(`✅ Streaming actif - ID: ${userId}`);
